@@ -47,12 +47,11 @@ class CLITest < Minitest::Test
   end
 
   def test_it_assigns_sub_instructions
-    skip
-    input  = 'load filename'
+    input  = 'queue count'
     parts = cli.process_input(input)
     cli.assign_sub_instructions(parts)
-
-    assert
+    
+    assert_equal 'count', cli.sub_command
   end
 
 end

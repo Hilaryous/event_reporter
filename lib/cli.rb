@@ -20,12 +20,28 @@ class CLI
       @command = parts[0]
       @parameter = parts[1]
     elsif parts[0] == 'queue'
-      assign_sub_instructions('queue')
+      assign_sub_instructions(parts)
     elsif parts[0 ] == 'help'
-      if parts[1] then assign_sub_instructions('help')
+      if parts[1] then assign_sub_instructions(parts)
       else
         @command = parts[0]
       end
+    end
+  end
+
+  def assign_sub_instructions(parts)
+    # if parts[1] == @command?
+    #   @sub_command = part[1]
+    if parts[1]== 'count'
+      @sub_command = parts[1]
+    elsif parts[1]== 'clear'
+      @sub_command = parts[1]
+    elsif parts[1]== 'print'
+      @sub_command = parts[1]
+    elsif parts[1..2]== 'print by'
+      @subcommand = parts[1...2]
+    elsif parts[1...2]== 'save to'
+      @subcommand = parts[1...2]
     end
   end
 end
