@@ -1,3 +1,4 @@
+require 'pry'
 class CLI
   attr_reader :command, :parameter, :sub_command
   def initialize
@@ -15,12 +16,16 @@ class CLI
   end
 
   def assign_instructions(parts)
-    if parts[0] == 'load'
-      command = parts[0]
-      paramater = parts[1]
-    elsif parts[0] == 'find'
-      command = parts[0]
-      parameters = parts[1]
+    if parts[0] == 'load' || parts[0] == 'find'
+      @command = parts[0]
+      @parameter = parts[1]
+    elsif parts[0] == 'queue'
+      assign_sub_instructions('queue')
+    elsif parts[0 ] == 'help'
+      if parts[1] then assign_sub_instructions('help')
+      else
+        @command = parts[0]
+      end
     end
   end
 end
