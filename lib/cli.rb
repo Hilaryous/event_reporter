@@ -1,4 +1,4 @@
-require 'pry'
+# require 'pry'
 class CLI
   attr_reader :command,
               :parameter,
@@ -49,19 +49,27 @@ class CLI
 
   def assign_help_instructions(parts)
     if parts[1..2].join(' ') == 'queue count'
-      @help_command = parts[1..2].join(' ')
+      assign_help_command(parts, 2)
     elsif parts[1..2].join(' ') == 'queue clear'
-      @help_command = parts[1..2].join(' ')
+      assign_help_command(parts, 2)
     elsif parts[1..2].join(' ') == 'queue print'
-      @help_command = parts[1..2].join(' ')
+      assign_help_command(parts, 2)
     elsif parts[1..3].join(' ') == 'queue print by'
-      @help_command = parts[1..3].join(' ')
+      assign_help_command(parts, 3)
     elsif parts[1..3].join(' ') == 'queue save to'
-      @help_command = parts[1..3].join(' ')
+      assign_help_command(parts, 3)
     elsif parts[1].join(' ') == 'find'
-      @help_command = parts[1].join(' ')
+      assign_help_command(parts, 1)
     elsif parts[1] == 'load'
-      @help_command = parts[1]
+      assign_help_command(parts, 1)
+    end
+  end
+
+  def assign_help_command(parts, n) # n is number of commands to be added
+    case n
+    when 1 then @help_command = parts[1]
+    when 2 then @help_command = parts[1..2].join(" ")
+    when 3 then @help_command = parts[1..3].join(" ")
     end
   end
 
@@ -72,7 +80,7 @@ class CLI
     when 'load'
       'load'
     when 'find'
-      'find'Find.find(parameters)
+      'find'
     when 'help'
       if help_command == ""
         'help'
