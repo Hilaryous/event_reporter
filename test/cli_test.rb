@@ -2,7 +2,7 @@ gem 'minitest', '~> 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/cli'
-# require 'pry'
+require 'pry'
 
 class CLITest < Minitest::Test
   attr_reader :cli
@@ -18,19 +18,9 @@ class CLITest < Minitest::Test
     assert "Event Manager Initialized!", cli.start
   end
 
-  def test_it_has_commands
+  def test_it_has_attributes
     assert cli.command
-  end
-
-  def test_it_has_queue_commands
     assert cli.queue_command
-  end
-
-  def test_it_has_help_commands
-    assert cli.help_command
-  end
-
-  def test_it_has_parameters
     assert cli.parameter
   end
 
@@ -63,14 +53,14 @@ class CLITest < Minitest::Test
     parts = cli.process_input(input)
     cli.assign_instructions(parts)
 
-    assert_equal 'queue count', cli.help_command
+    assert_equal 'queue count', cli.parameter
   end
 
-  def test_it_exectues_commands
+  def test_it_exectues_instructions
     input  = 'help'
     parts = cli.process_input(input)
     cli.assign_instructions(parts)
-    result = cli.execute_command
+    result = cli.execute_instructions
     assert_equal 'help', result
   end
 
@@ -78,7 +68,7 @@ class CLITest < Minitest::Test
     input  = 'queue count'
     parts = cli.process_input(input)
     cli.assign_instructions(parts)
-    result = cli.execute_command
+    result = cli.execute_instructions
 
     assert_equal 'counting queue', result
   end
@@ -87,7 +77,7 @@ class CLITest < Minitest::Test
     input  = 'help queue count'
     parts = cli.process_input(input)
     cli.assign_instructions(parts)
-    result = cli.execute_command
+    result = cli.execute_instructions
 
     assert_equal 'use it this way', result
 

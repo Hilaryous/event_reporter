@@ -1,14 +1,12 @@
-# require 'pry'
+require 'pry'
 class CLI
   attr_reader :command,
               :parameter,
               :queue_command,
-              :help_command
 
   def initialize
     @command       = ""
     @queue_command = ""
-    @help_command  = ""
     @parameter     = ""
   end
 
@@ -52,44 +50,49 @@ class CLI
   end
 
   def assign_queue_command(parts, n)
-    @queue_command = parts[1] if n == 1
-    @queue_command = parts[1..2].join(" ") if n == 2
+    if n == 1
+      @queue_command = parts[1]
+      @parameter = parts[2..-1]
+    elsif n == 2
+      @queue_command = parts[1..2].join(" ")
+      @parameter = parts[2..-1]
+    end
   end
 
   def assign_help_instructions(parts)
     case parts[1..2].join(" ")
       when 'queue count'
-        assign_help_command(parts, 2)
+        assign_help_parameter(parts, 2)
       when 'queue clear'
-        assign_help_command(parts, 2)
+        assign_help_parameter(parts, 2)
       when 'queue print'
-        assign_help_command(parts, 2)
+        assign_help_parameter(parts, 2)
     end
 
     case parts[1..3].join(" ")
       when 'queue print by'
-        assign_help_command(parts, 3)
+        assign_help_parameter(parts, 3)
       when 'queue save to'
-        assign_help_command(parts, 3)
+        assign_help_parameter(parts, 3)
     end
 
     case parts[1]
       when 'find'
-        assign_help_command(parts, 1)
+        assign_help_parameter(parts, 1)
       when 'load'
-        assign_help_command(parts, 1)
-      end
-  end
-
-  def assign_help_command(parts, n) # n is number of commands to be added
-    case n
-    when 1 then @help_command = parts[1]
-    when 2 then @help_command = parts[1..2].join(" ")
-    when 3 then @help_command = parts[1..3].join(" ")
+        assign_help_parameter(parts, 1)
     end
   end
 
-  def execute_command
+  def assign_help_parameter(parts, n) # n is number of commands to be added
+    case n
+      when 1 then @parameter = parts[1]
+      when 2 then @parameter = parts[1..2].join(" ")
+      when 3 then @parameter = parts[1..3].join(" ")
+    end
+  end
+
+  def execute_instructions
     case command
     when 'queue'
       execute_queue_command
@@ -98,7 +101,7 @@ class CLI
     when 'find'
       'find'
     when 'help'
-      if help_command == ""
+      if @parameter == ''
         'help'
       else
         execute_help_command
@@ -122,7 +125,7 @@ class CLI
   end
 
   def execute_help_command
-    case help_command
+    case parameter
     when 'queue count'
       "use it this way"
     when 'queue clear'
@@ -139,4 +142,5 @@ class CLI
       'use it this way'
     end
   end
+
 end
