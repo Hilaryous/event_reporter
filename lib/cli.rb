@@ -21,16 +21,14 @@ class CLI
   end
 
   def assign_instructions(parts)
+    @command = parts[0]
     if parts[0] == 'load' || parts[0] == 'find'
-      @command = parts[0]
       @parameter = parts[1]
     elsif parts[0] == 'queue'
       assign_queue_instructions(parts)
     elsif parts[0] == 'help'
       if parts[1]
         assign_help_instructions(parts)
-      else
-        @command = parts[0]
       end
     end
   end
@@ -64,6 +62,57 @@ class CLI
       @help_command = parts[1].join(' ')
     elsif parts[1] == 'load'
       @help_command = parts[1]
+    end
+  end
+
+  def execute_command
+    case command
+    when 'queue'
+      execute_queue_command
+    when 'load'
+      'load'
+    when 'find'
+      'find'
+    when 'help'
+      if help_command == ""
+        'help'
+      else
+        execute_help_command
+      end
+    end
+  end
+
+  def execute_queue_command
+    case queue_command
+    when 'count'
+      'counting queue'
+    when 'save to'
+      'saving queue'
+    when 'print by'
+      'printing'
+    when 'print'
+      'print'
+    when 'clear'
+      'clear'
+    end
+  end
+
+  def execute_help_command
+    case help_command
+    when 'queue count'
+      "use it this way"
+    when 'queue clear'
+      'use it this way'
+    when 'queue print'
+      'use it this way'
+    when 'queue save to'
+      'use it this way'
+    when 'queue print by'
+      'use it this way'
+    when 'find'
+      'use it this way'
+    when 'load'
+      'use it this way'
     end
   end
 end

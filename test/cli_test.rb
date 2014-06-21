@@ -66,4 +66,30 @@ class CLITest < Minitest::Test
     assert_equal 'queue count', cli.help_command
   end
 
+  def test_it_exectues_commands
+    input  = 'help'
+    parts = cli.process_input(input)
+    cli.assign_instructions(parts)
+    result = cli.execute_command
+    assert_equal 'help', result
+  end
+
+  def test_it_executes_queue_commands
+    input  = 'queue count'
+    parts = cli.process_input(input)
+    cli.assign_instructions(parts)
+    result = cli.execute_command
+
+    assert_equal 'counting queue', result
+  end
+
+  def test_it_executes_help_commands
+    input  = 'help queue count'
+    parts = cli.process_input(input)
+    cli.assign_instructions(parts)
+    result = cli.execute_command
+
+    assert_equal 'use it this way', result
+
+  end
 end
