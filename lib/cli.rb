@@ -35,16 +35,21 @@ class CLI
 
   def assign_queue_instructions(parts)
     if parts[1]== 'count'
-      @queue_command = parts[1]
+      assign_queue_command(parts, 1)
     elsif parts[1]== 'clear'
-      @queue_command = parts[1]
-    elsif parts[1..2].join(' ') == 'print by'
-      @queue_command = parts[1..2].join(' ')
+      assign_queue_command(parts, 1)
     elsif parts[1]== 'print'
-      @queue_command = parts[1]
+        assign_queue_command(parts, 1)
+    elsif parts[1..2].join(' ') == 'print by'
+      assign_queue_command(parts, 2)
     elsif parts[1..2].join(' ') == 'save to'
-      @queue_command = parts[1..2].join(' ')
+      assign_queue_command(parts, 2)
     end
+  end
+
+  def assign_queue_command(parts, n)
+    @queue_command = parts[1] if n == 1
+    @queue_command = parts[1..2].join(" ") if n == 2
   end
 
   def assign_help_instructions(parts)
