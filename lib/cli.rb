@@ -1,13 +1,17 @@
 require 'pry'
 class CLI
+
+  # Removed @help_command and just used @parameters to store that same data.
+  # Seemed to fit logically because things like queue and find when passed to
+  # help are treated as parameters and not commands.
   attr_reader :command,
-              :parameter,
-              :queue_command,
+              :parameters,
+              :queue_command
 
   def initialize
     @command       = ""
     @queue_command = ""
-    @parameter     = ""
+    @parameters     = ""
   end
 
   def start
@@ -21,7 +25,7 @@ class CLI
   def assign_instructions(parts)
     @command = parts[0]
     if parts[0] == 'load' || parts[0] == 'find'
-      @parameter = parts[1]
+      @parameters = parts[1]
     elsif parts[0] == 'queue'
       assign_queue_instructions(parts)
     elsif parts[0] == 'help'
@@ -49,13 +53,13 @@ class CLI
     end
   end
 
-  def assign_queue_command(parts, n)
+  def assign_queue_command(parts, n) # n is number of params to be added
     if n == 1
       @queue_command = parts[1]
-      @parameter = parts[2..-1]
+      @parameters = parts[2..-1].join(" ")
     elsif n == 2
       @queue_command = parts[1..2].join(" ")
-      @parameter = parts[2..-1]
+      @parameters = parts[3..-1].join(" ")
     end
   end
 
@@ -84,11 +88,11 @@ class CLI
     end
   end
 
-  def assign_help_parameter(parts, n) # n is number of commands to be added
+  def assign_help_parameter(parts, n)
     case n
-      when 1 then @parameter = parts[1]
-      when 2 then @parameter = parts[1..2].join(" ")
-      when 3 then @parameter = parts[1..3].join(" ")
+    when 1 then @parameters = parts[1]
+    when 2 then @parameters = parts[1..2].join(" ")
+    when 3 then @parameters = parts[1..3].join(" ")
     end
   end
 
@@ -101,7 +105,7 @@ class CLI
     when 'find'
       'find'
     when 'help'
-      if @parameter == ''
+      if @parameters == ''
         'help'
       else
         execute_help_command
@@ -125,7 +129,7 @@ class CLI
   end
 
   def execute_help_command
-    case parameter
+    case parameters
     when 'queue count'
       "use it this way"
     when 'queue clear'
@@ -142,5 +146,4 @@ class CLI
       'use it this way'
     end
   end
-
 end

@@ -5,9 +5,21 @@ require_relative '../lib/cli'
 require 'pry'
 
 class CLITest < Minitest::Test
+
   attr_reader :cli
   def setup
     @cli ||= CLI.new
+  end
+
+  def process_and_execute(input)
+    parts = cli.process_input(input)
+    cli.assign_instructions(parts)
+    result = cli.execute_instructions
+  end
+
+  def process_and_assign(input)
+    parts = cli.process_input(input)
+    cli.assign_instructions(parts)
   end
 
   def test_it_exist
@@ -21,7 +33,7 @@ class CLITest < Minitest::Test
   def test_it_has_attributes
     assert cli.command
     assert cli.queue_command
-    assert cli.parameter
+    assert cli.parameters
   end
 
   def test_it_processes_input
@@ -33,53 +45,54 @@ class CLITest < Minitest::Test
 
   def test_it_assigns_instructions
     input  = 'load filename'
-    parts = cli.process_input(input)
-    cli.assign_instructions(parts)
+    result = process_and_assign(input)
 
     assert_equal 'load', cli.command
-    assert_equal 'filename', cli.parameter
+    assert_equal 'filename', cli.parameters
   end
 
   def test_it_assigns_queue_instructions
     input  = 'queue count'
-    parts = cli.process_input(input)
-    cli.assign_instructions(parts)
+    result = process_and_assign(input)
 
     assert_equal 'count', cli.queue_command
   end
 
   def test_it_assigns_help_instructions
     input  = 'help queue count'
-    parts = cli.process_input(input)
-    cli.assign_instructions(parts)
+    result = process_and_assign(input)
 
-    assert_equal 'queue count', cli.parameter
+    assert_equal 'queue count', cli.parameters
   end
 
   def test_it_exectues_instructions
     input  = 'help'
-    parts = cli.process_input(input)
-    cli.assign_instructions(parts)
-    result = cli.execute_instructions
+    result = process_and_execute(input)
+
     assert_equal 'help', result
   end
 
   def test_it_executes_queue_commands
     input  = 'queue count'
-    parts = cli.process_input(input)
-    cli.assign_instructions(parts)
-    result = cli.execute_instructions
+    result = process_and_execute(input)
 
     assert_equal 'counting queue', result
   end
 
   def test_it_executes_help_commands
     input  = 'help queue count'
-    parts = cli.process_input(input)
-    cli.assign_instructions(parts)
-    result = cli.execute_instructions
+    result = process_and_execute(input)
 
     assert_equal 'use it this way', result
-
   end
+
+  def test_assign_queue_command_assigns_parameters
+    input = 'queue print by parameters'
+    result = process_and_assign(input)
+
+    assert_equal 'queue', cli.command
+    assert_equal 'print by', cli.queue_command
+    assert_equal 'parameters', cli.parameters
+  end
+
 end
