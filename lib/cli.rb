@@ -11,7 +11,7 @@ class CLI
   def initialize
     @command       = ""
     @queue_command = ""
-    @parameters     = ""
+    @parameters    = ""
   end
 
   def start
@@ -90,60 +90,60 @@ class CLI
 
   def assign_help_parameter(parts, n)
     case n
-    when 1 then @parameters = parts[1]
-    when 2 then @parameters = parts[1..2].join(" ")
-    when 3 then @parameters = parts[1..3].join(" ")
+      when 1 then @parameters = parts[1]
+      when 2 then @parameters = parts[1..2].join(" ")
+      when 3 then @parameters = parts[1..3].join(" ")
     end
   end
 
   def execute_instructions
     case command
-    when 'queue'
-      execute_queue_command
-    when 'load'
-      'load'
-    when 'find'
-      'find'
-    when 'help'
-      if @parameters == ''
-        'help'
-      else
-        execute_help_command
-      end
+      when 'queue'
+        execute_queue_command
+      when 'load'
+        'load'
+      when 'find'
+        'find'
+      when 'help'
+        if @parameters == ''
+          'help'
+        else
+          execute_help_command
+        end
     end
   end
 
   def execute_queue_command
     case queue_command
-    when 'count'
-      'counting queue'
-    when 'save to'
-      'saving queue'
-    when 'print by'
-      'printing'
-    when 'print'
-      'print'
-    when 'clear'
-      'clear'
+      when 'count'
+        'counting queue'
+      when 'save to'
+        'saving queue'
+      when 'print by'
+        'printing'
+      when 'print'
+        'print'
+      when 'clear'
+        'clear'
     end
   end
 
   def execute_help_command
     case parameters
-    when 'queue count'
-      "use it this way"
-    when 'queue clear'
-      'use it this way'
-    when 'queue print'
-      'use it this way'
-    when 'queue save to'
-      'use it this way'
-    when 'queue print by'
-      'use it this way'
-    when 'find'
-      'use it this way'
-    when 'load'
-      'use it this way'
+      when 'queue count'
+        "use it this way"
+      when 'queue clear'
+        'use it this way'
+      when 'queue print'
+        'use it this way'
+      when 'queue save to'
+        'use it this way'
+      when 'queue print by'
+        'use it this way'
+      when 'find'
+        'use it this way'
+      when 'load'
+        'use it this way'
     end
   end
 end
