@@ -22,8 +22,12 @@ class CLITest < Minitest::Test
     assert cli.command
   end
 
-  def test_it_has_sub_commands
-    assert cli.sub_command
+  def test_it_has_queue_commands
+    assert cli.queue_command
+  end
+
+  def test_it_has_help_commands
+    assert cli.help_command
   end
 
   def test_it_has_parameters
@@ -46,12 +50,20 @@ class CLITest < Minitest::Test
     assert_equal 'filename', cli.parameter
   end
 
-  def test_it_assigns_sub_instructions
+  def test_it_assigns_queue_instructions
     input  = 'queue count'
     parts = cli.process_input(input)
-    cli.assign_sub_instructions(parts)
-    
-    assert_equal 'count', cli.sub_command
+    cli.assign_instructions(parts)
+
+    assert_equal 'count', cli.queue_command
+  end
+
+  def test_it_assigns_help_instructions
+    input  = 'help queue count'
+    parts = cli.process_input(input)
+    cli.assign_instructions(parts)
+
+    assert_equal 'queue count', cli.help_command
   end
 
 end
