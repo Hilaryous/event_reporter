@@ -34,16 +34,20 @@ class CLI
   end
 
   def assign_queue_instructions(parts)
-    if parts[1]== 'count'
-      assign_queue_command(parts, 1)
-    elsif parts[1]== 'clear'
-      assign_queue_command(parts, 1)
-    elsif parts[1]== 'print'
+    case parts[1]
+      when 'count'
         assign_queue_command(parts, 1)
-    elsif parts[1..2].join(' ') == 'print by'
-      assign_queue_command(parts, 2)
-    elsif parts[1..2].join(' ') == 'save to'
-      assign_queue_command(parts, 2)
+      when 'clear'
+        assign_queue_command(parts, 1)
+      when 'print'
+        assign_queue_command(parts, 1)
+    end
+
+    case parts[1..2].join(" ")
+      when 'print by'
+        assign_queue_command(parts, 2)
+      when 'save to'
+        assign_queue_command(parts, 2)
     end
   end
 
@@ -53,21 +57,28 @@ class CLI
   end
 
   def assign_help_instructions(parts)
-    if parts[1..2].join(' ') == 'queue count'
-      assign_help_command(parts, 2)
-    elsif parts[1..2].join(' ') == 'queue clear'
-      assign_help_command(parts, 2)
-    elsif parts[1..2].join(' ') == 'queue print'
-      assign_help_command(parts, 2)
-    elsif parts[1..3].join(' ') == 'queue print by'
-      assign_help_command(parts, 3)
-    elsif parts[1..3].join(' ') == 'queue save to'
-      assign_help_command(parts, 3)
-    elsif parts[1].join(' ') == 'find'
-      assign_help_command(parts, 1)
-    elsif parts[1] == 'load'
-      assign_help_command(parts, 1)
+    case parts[1..2].join(" ")
+      when 'queue count'
+        assign_help_command(parts, 2)
+      when 'queue clear'
+        assign_help_command(parts, 2)
+      when 'queue print'
+        assign_help_command(parts, 2)
     end
+
+    case parts[1..3].join(" ")
+      when 'queue print by'
+        assign_help_command(parts, 3)
+      when 'queue save to'
+        assign_help_command(parts, 3)
+    end
+
+    case parts[1]
+      when 'find'
+        assign_help_command(parts, 1)
+      when 'load'
+        assign_help_command(parts, 1)
+      end
   end
 
   def assign_help_command(parts, n) # n is number of commands to be added
