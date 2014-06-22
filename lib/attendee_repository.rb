@@ -1,12 +1,7 @@
 require 'csv'
 require 'pry'
 
-class AttendeeLoader
-  attr_reader :rows
-  def initialize
-    @rows = []
-  end
-
+class AttendeeRepository
   def load(filename='./test/fixtures/event_attendees.csv')
     CSV.open(filename, headers: true, header_converters: :symbol)
   end
@@ -18,6 +13,8 @@ class AttendeeLoader
   end
 end
 
+
+just load the data and
 #   def assign_attributes(rows)
 #     entry.each do |entry|
 #       id = entry[:id]

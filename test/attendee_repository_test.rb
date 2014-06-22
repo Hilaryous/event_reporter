@@ -2,9 +2,9 @@ gem 'minitest', '~> 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
 
-require './lib/attendee_loader'
+require './lib/attendee_repository'
 
-class AttendeeLoaderTest < Minitest::Test
+class AttendeeRepositoryTest < Minitest::Test
   attr_reader :al, :filename
   def setup
     @filename = './test/fixtures/event_attendees.csv'
