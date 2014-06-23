@@ -4,12 +4,15 @@ require 'minitest/pride'
 
 require './lib/queue'
 require './lib/attendee_repository'
+require './lib/event_reporter'
 
 class TheQueueTest < Minitest::Test
-  attr_reader :find_results, :queue
+  attr_reader :find_results, :queue, :repo
   def setup
-    attendee_repo = AttendeeRepository.load('./test/fixtures/event_attendees.csv', Attendee)
-    @queue = attendee_repo.find(:first_name, 'Sarah')
+    @repo = AttendeeRepository.load('./test/fixtures/event_attendees.csv', Attendee)
+    @event_reporter = EventReporter.new(repo, TheQueue.new)
+    @queue = @event_reporter.queue
+    @event_reporter.find(:first_name, 'Sarah')
   end
 
   def test_it_exists

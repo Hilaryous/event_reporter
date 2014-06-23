@@ -8,7 +8,8 @@ class EventReporter
   end
 
   def find(attribute, value)
-    @queue = @repository.find(attribute, value)
+    results = @repository.find(attribute, value)
+    results.each { |i| @queue.current << i }
   end
 
   def count

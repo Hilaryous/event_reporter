@@ -98,7 +98,7 @@ class CLITest < Minitest::Test
   end
 
   def test_it_executes_the_find_command
-    skip
+    # skip
     input = 'load ./test/fixtures/event_attendees.csv'
     result = process_and_execute(input)
 

@@ -24,11 +24,11 @@ class AttendeeRepository
   # TheQueue that has the proper entries loaded.
 
   def find(attribute, value)
-    queue_entry = attendee_collection.select { |object| object.send(attribute) == value }
-    @queue ||= TheQueue.new
-    queue_entry.each do |i|
-      @queue << i
-    end
-    return @queue
+    attendee_collection.select { |object| object.send(attribute) == value }
+    # @queue ||= TheQueue.new
+    # queue_entry.each do |i|
+    #   @queue << i
+    # end
+    # return @queue
   end
 end

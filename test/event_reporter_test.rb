@@ -5,17 +5,13 @@ require 'minitest/pride'
 require './lib/event_reporter'
 
 class EventReporterTest < Minitest::Test
-  attr_reader :repo, :event_reporter
+  attr_reader :repo, :event_reporter, :queue
   def setup
     @repo = AttendeeRepository.load('./test/fixtures/event_attendees.csv', Attendee)
-    @event_reporter = EventReporter.new(repo)
-    @queue = event_reporter.find(:first_name, 'Sarah')
-    @queue = event_reporter.find(:first_name, 'Aya')
-  end
-
-  def test_it_executes_find
-    @find_one
-    @find_two
+    @event_reporter = EventReporter.new(repo, TheQueue.new)
+    @queue = @event_reporter.queue
+    event_reporter.find(:first_name, 'Sarah')
+    event_reporter.find(:first_name, 'Aya')
   end
 
   def test_it_executes_count
