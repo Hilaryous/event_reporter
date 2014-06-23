@@ -1,21 +1,26 @@
-require 'pry'
+# require 'pry'
+require './lib/event_reporter'
+require './lib/attendee_repository'
+require './lib/attendee'
+
+
 class CLI
 
   # Removed @help_command and just used @parameters to store that same data.
   # Seemed to fit logically because things like queue and find when passed to
   # help are treated as parameters and not commands.
   attr_reader :command,
-  :parameters,
-  :queue_command
+              :parameters,
+              :queue_command,
+              :find_command,
+              :event_reporter
 
   def initialize
-    @command       = ""
-    @queue_command = ""
-    @parameters    = ""
-  end
-
-  def start
-    "Event Reporter Initialized"
+    @event_reporter = nil
+    @command        = ""
+    @queue_command  = ""
+    @find_command   = ""
+    @parameters     = ""
   end
 
   def process_input(input)
@@ -24,8 +29,11 @@ class CLI
 
   def assign_instructions(parts)
     @command = parts[0]
-    if parts[0] == 'load' || parts[0] == 'find'
+    if parts[0] == 'load'
       @parameters = parts[1]
+    elsif parts[0] == 'find'
+      @find_command = parts[1]
+      @parameters = parts[2]
     elsif parts[0] == 'queue'
       assign_queue_instructions(parts)
     elsif parts[0] == 'help'
@@ -100,18 +108,26 @@ class CLI
 
   def execute_instructions
     case command
-    when 'queue'
-      execute_queue_command
-    when 'load'
-      'load'
-    when 'find'
-      'find'
-    when 'help'
-      if @parameters == ''
-        'help'
-      else
-        execute_help_command
-      end
+      when 'queue'
+        execute_queue_command
+      when 'load'
+        repository = AttendeeRepository.load(parameters, Attendee)
+        @event_reporter = EventReporter.new(repository)
+        puts "Loaded #{parameters}"
+        # At this point the current cli instance will have @event_reporter loaded
+        # with the specified file, and all possible actions will be called as
+        # event_reporter.find, event_reporter.queue_print_by, etc.
+        #
+        # This will also reinitialize @event_reporter with the new specified file
+        # when load is called multiple times within a single CLI instance.
+      when 'find'
+        event_reporter.find(find_command, parameters)
+      when 'help'
+        if @parameters == ''
+          'help'
+        else
+          execute_help_command
+        end
     end
   end
 
@@ -147,5 +163,24 @@ class CLI
     when 'load'
       Help.load_file
     end
+  end
+
+
+  # just load a file once
+  def start
+    puts "Entry Reporter"
+    command = '> '
+
+    while command != 'q'
+      puts "load a file:"
+      puts "> "
+      parts = process_input(gets.chomp)
+      assign_instructions(parts)
+      execute_instructions
+    end
+  end
+
+  def self.run
+    CLI.new.start
   end
 end
