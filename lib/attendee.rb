@@ -1,3 +1,4 @@
+require 'pry'
 class Attendee
   attr_reader :id,
               :regdate,
@@ -23,20 +24,19 @@ class Attendee
     @zipcode = clean_zipcode(data[:zipcode])
   end
 
-  # clean all the things
   def clean_first_name(first_name)
-    first_name.upcase
+    first_name.capitalize
   end
 
-  def clean_last_name(first_name)
-    last_name.upcase
+  def clean_last_name(last_name)
+    last_name.capitalize
   end
 
   def clean_zipcode(zipcode)
     zipcode.to_s.rjust(5,"0")[0..4]
   end
 
-  def clean_homephone
+  def clean_homephone(phone_number)
     if phone_number.nil? || phone_number.length < 10
       phone_number = "0000000000"
     elsif phone_number.length == 10
