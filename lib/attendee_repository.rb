@@ -5,7 +5,7 @@ require './lib/attendee'
 
 class AttendeeRepository
   def self.load(filename, klass)
-    rows = CSV.open(filename, headers: true, header_converters: :symbol)
+    rows = CSV.open(filename='test/fixtures/event_attendees.csv', headers: true, header_converters: :symbol)
     attendee_collection = rows.map {|row|
       klass.new(row)
     }
