@@ -1,5 +1,6 @@
 require 'csv'
 require 'pry'
+require './lib/attendee'
 # require 'queue'
 
 class AttendeeRepository
@@ -8,11 +9,7 @@ class AttendeeRepository
     objects = rows.map {|row|
       klass.new(row)
     }
-    # objects here is an array with each element being an Attendee object which is
-    # a hash with headers and values, the processing to assign Attendee with each
-    # attribute is done in the Attendee class, the entire row (entry) is passed to
-    # Attendee.new()
-    new(objects) # creates a new instance of this class
+    new(objects)
   end
 
   attr_reader :objects
@@ -22,7 +19,6 @@ class AttendeeRepository
 
   # def find(attribute, value)
   #   results = objects.select { |object| object.send(attribute) == value }
-  #   Queue.new(results)
+  #   Queue.new(results) # array of Attendee objects that match
   # end
 end
-
