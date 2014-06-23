@@ -2,27 +2,21 @@ require 'csv'
 require 'pry'
 
 class AttendeeRepository
-  def load(filename='./test/fixtures/event_attendees.csv')
-    CSV.open(filename, headers: true, header_converters: :symbol)
+  def self.load(filename, klass)
+    rows = CSV.open(filename, headers: true, header_converters: :symbol)
+    objects = rows.map {|row|
+      klass.new(row)
+    }
+    # objects here is an array with each element being an Attendee object which is
+    # a hash with headers and values, the processing to assign Attendee with each
+    # attribute is done in the Attendee class, the entire row (entry) is passed to
+    # Attendee.new()
+    new(objects) # creates a new instance of this class
   end
 
-  def assign_rows(data)
-    data.each do |row|
-      @rows << row
-    end
+  attr_reader :objects
+  def initialize(objects)
+    @objects = objects
   end
 end
 
-
-just load the data and
-#   def assign_attributes(rows)
-#     entry.each do |entry|
-#       id = entry[:id]
-#
-#     end
-#   end
-# end
-#
-# al = AttendeeLoader.new
-# data = al.load
-# al.rows(data)
