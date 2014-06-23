@@ -6,15 +6,15 @@ require './lib/attendee'
 class AttendeeRepository
   def self.load(filename, klass)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)
-    objects = rows.map {|row|
+    attendee_collection = rows.map {|row|
       klass.new(row)
     }
-    new(objects)
+    new(attendee_collection)
   end
 
-  attr_reader :objects
-  def initialize(objects)
-    @objects = objects
+  attr_reader :attendee_collection
+  def initialize(attendee_collection)
+    @attendee_collection = attendee_collection
   end
 
   # def find(attribute, value)
