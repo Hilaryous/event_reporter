@@ -4,6 +4,6 @@ require 'minitest/pride'
 
 require 'event_reporter'
 
-class AttendeeTest < Minitest::Test
+class EventReporterTest < Minitest::Test
 
 end

@@ -1,5 +1,7 @@
-require 'pry'
-require 'entry_reporter'
+# require 'pry'
+require './lib/event_reporter'
+require './lib/attendee_repository'
+require './lib/attendee'
 
 
 class CLI
@@ -9,17 +11,14 @@ class CLI
   # help are treated as parameters and not commands.
   attr_reader :command,
               :parameters,
-              :queue_command
+              :queue_command,
+              :event_reporter
 
   def initialize
-    @entry_reporter = nil
+    @event_reporter = nil
     @command       = ""
     @queue_command = ""
     @parameters    = ""
-  end
-
-  def start
-    "Event Reporter Initialized"
   end
 
   def process_input(input)
@@ -105,7 +104,8 @@ class CLI
       when 'queue'
         execute_queue_command
       when 'load'
-        'load'
+        repository = AttendeeRepository.load(parameters, Attendee)
+        @event_reporter = EventReporter.new(repository)
       when 'find'
         'find'
       when 'help'
@@ -154,26 +154,16 @@ class CLI
 
   # just load a file once
   def start
-    puts "Entry Reporter: testing load"
-    command = ''
-    while command != 'q'
+    puts "Entry Reporter"
+    command = '> '
 
+    while command != 'q'
       puts "load a file:"
       puts "> "
       parts = process_input(gets.chomp)
       assign_instructions(parts)
-
-      case command
-      when 'load'
-        'load'
-    #     @entry_reporter = EntryReporter.new(parameters).start
-    #     operations_on_loaded_data
-    #   end
+      execute_instructions
     end
-  end
-
-  def operations_on_loaded_data
-
   end
 
   def run

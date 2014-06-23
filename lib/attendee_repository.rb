@@ -1,6 +1,6 @@
 require 'csv'
 require 'pry'
-require 'queue'
+# require 'queue'
 
 class AttendeeRepository
   def self.load(filename, klass)
