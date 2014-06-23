@@ -1,4 +1,3 @@
-require 'pry'
 class Attendee
   attr_reader :id,
               :regdate,

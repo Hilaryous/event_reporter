@@ -1,4 +1,3 @@
-# require 'pry'
 require './lib/event_reporter'
 require './lib/attendee_repository'
 require './lib/attendee'
@@ -28,7 +27,7 @@ class CLI
   end
 
   private
-  
+
   def process_input(input)
     input.split
   end

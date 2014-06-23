@@ -5,8 +5,6 @@ require 'minitest/pride'
 require './lib/queue'
 require './lib/attendee_repository'
 
-require 'pry'
-
 class TheQueueTest < Minitest::Test
   attr_reader :find_results, :queue
   def setup
@@ -15,12 +13,11 @@ class TheQueueTest < Minitest::Test
   end
 
   def test_it_exists
-    puts queue.class
     assert queue
   end
 
   def test_it_counts_the_queue
-    assert_equal 2, queue.current.count
+    assert_equal 2, queue.count_data
   end
 
   def test_it_clears_the_queue
@@ -28,7 +25,15 @@ class TheQueueTest < Minitest::Test
     assert queue.current.empty?
   end
 
-  def test_it_prints
-    assert queue.current.print_data_table
+  def test_it_executes_print
+    assert_equal "Hi", queue.print_data_table
+  end
+
+  def test_it_executes_print_by
+    assert_equal "Hello", queue.print_by
+  end
+
+  def test_it_save_to
+    assert_equal "Hey", queue.save_to
   end
 end
