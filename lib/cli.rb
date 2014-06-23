@@ -2,7 +2,7 @@
 require './lib/event_reporter'
 require './lib/attendee_repository'
 require './lib/attendee'
-
+require './lib/help'
 
 class CLI
 
@@ -47,31 +47,52 @@ class CLI
     case parts[1]
     when 'count'
       assign_queue_command(parts, 1)
+      assign_queue_parameters(parts, 1)
     when 'clear'
       assign_queue_command(parts, 1)
+      assign_queue_parameters(parts, 1)
+
     when 'print'
       assign_queue_command(parts, 1)
+      assign_queue_parameters(parts, 1)
     end
 
     case parts[1..2].join(" ")
     when 'print by'
       assign_queue_command(parts, 2)
+      assign_queue_parameters(parts, 2)
+
     when 'save to'
       assign_queue_command(parts, 2)
+      assign_queue_parameters(parts, 2)
+
     end
   end
 
   def assign_queue_command(parts, n) # n is number of params to be added
     if n == 1
       @queue_command = parts[1]
-      @parameters = parts[2..-1].join(" ")
     elsif n == 2
       @queue_command = parts[1..2].join(" ")
+    end
+  end
+
+  def assign_queue_parameters(parts, n)
+    if n == 1
+      @parameters = parts[2..-1].join(" ")
+    elsif n == 2
       @parameters = parts[3..-1].join(" ")
     end
   end
 
   def assign_help_instructions(parts)
+    case parts[1]
+    when 'find'
+      assign_help_parameter(parts, 1)
+    when 'load'
+      assign_help_parameter(parts, 1)
+    end
+
     case parts[1..2].join(" ")
     when 'queue count'
       assign_help_parameter(parts, 2)
@@ -87,15 +108,7 @@ class CLI
     when 'queue save to'
       assign_help_parameter(parts, 3)
     end
-
     #merge queue helps into one method (private)
-
-    case parts[1]
-    when 'find'
-      assign_help_parameter(parts, 1)
-    when 'load'
-      assign_help_parameter(parts, 1)
-    end
   end
 
   def assign_help_parameter(parts, n)
@@ -134,7 +147,7 @@ class CLI
   def execute_queue_command#(can be private)
     case queue_command
     when 'count'
-      Help.count#(public)
+      'count'
     when 'save to'
       'saving queue'
     when 'print by'
@@ -149,19 +162,19 @@ class CLI
   def execute_help_command
     case parameters
     when 'queue count'
-      "use it this way"
+      Help.count
     when 'queue clear'
-      'use it this way'
+      Help.clear
     when 'queue print'
-      'use it this way'
+      Help.printer
     when 'queue save to'
-      'use it this way'
+      Help.save_to
     when 'queue print by'
-      'use it this way'
+      Help.print_by
     when 'find'
-      'use it this way'
+      Help.find
     when 'load'
-      'use it this way'
+      Help.load_file
     end
   end
 

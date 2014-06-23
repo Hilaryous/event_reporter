@@ -72,14 +72,14 @@ class CLITest < Minitest::Test
     input  = 'queue count'
     result = process_and_execute(input)
 
-    assert_equal 'counting queue', result
+    assert_equal 'count', result
   end
 
   def test_it_executes_help_commands
     input  = 'help queue count'
     result = process_and_execute(input)
 
-    assert_equal 'use it this way', result
+    assert_match /Output/, result
   end
 
   def test_assign_queue_command_assigns_parameters
