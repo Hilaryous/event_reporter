@@ -5,7 +5,10 @@ class EventReporter
 
   def find(attribute, value='filename')
     # when implemented will call AttendeeRepository#find
+    # Queue instance will be called
+    # when do new find queue will be cleared
     "attribute: #{attribute}"
   end
-end
 
+  ## this will have all the queue methods called
+end

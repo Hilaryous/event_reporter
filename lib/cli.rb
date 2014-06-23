@@ -23,6 +23,12 @@ class CLI
     @parameters     = ""
   end
 
+  def self.run
+    CLI.new.start
+  end
+
+  private
+  
   def process_input(input)
     input.split
   end
@@ -191,9 +197,5 @@ class CLI
       assign_instructions(parts)
       execute_instructions
     end
-  end
-
-  def self.run
-    CLI.new.start
   end
 end
