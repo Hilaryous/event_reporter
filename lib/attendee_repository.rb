@@ -1,6 +1,7 @@
 require 'csv'
 require 'pry'
 require './lib/attendee'
+require './lib/queue'
 require 'pry'
 
 class AttendeeRepository
@@ -17,11 +18,19 @@ class AttendeeRepository
     @attendee_collection = attendee_collection
   end
 
+  # what should this return
+  # creates a new array with attendee objects that match criteria
+  # create a new queue object if one doesn't exists
+  # add each attendee object to TheQueue.current (array)
+  # we want EventReporter to have access to an instance of
+  # TheQueue that has the proper entries loaded.
+
   def find(attribute, value)
     queue_entry = attendee_collection.select { |object| object.send(attribute) == value }
-    @queue || @queue = TheQueue.new
+    @queue ||= TheQueue.new
     queue_entry.each do |i|
       @queue << i
     end
+    return @queue
   end
 end

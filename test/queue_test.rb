@@ -15,10 +15,20 @@ class TheQueueTest < Minitest::Test
   end
 
   def test_it_exists
+    puts queue.class
     assert queue
   end
 
   def test_it_counts_the_queue
-    assert_equal 2, queue.count
+    assert_equal 2, queue.current.count
+  end
+
+  def test_it_clears_the_queue
+    queue.clear_data
+    assert queue.current.empty?
+  end
+
+  def test_it_prints
+    assert queue.current.print_data_table
   end
 end

@@ -1,14 +1,22 @@
 class TheQueue
-  attr_reader :queue
+  attr_reader :current
   def initialize#(find_results)
-    @queue = []
+    @current = []
   end
 
   def count
-    @queue.count
+    @current.count
+  end
+
+  def clear_data
+    @current.clear
+  end
+
+  def print_data_table
+
   end
 
   def << (attendees)
-    @queue << attendees
+    @current << attendees
   end
 end
