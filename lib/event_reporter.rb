@@ -2,9 +2,9 @@ require './lib/attendee_repository'
 
 class EventReporter
   attr_reader :queue
-  def initialize(repository=AttendeeRepository.load(Attendee))
+  def initialize(repository=AttendeeRepository.load(Attendee), queue)
     @repository = repository
-    @queue = nil
+    @queue = queue
   end
 
   def find(attribute, value)
@@ -12,11 +12,11 @@ class EventReporter
   end
 
   def count
-    @queue.count
+    @queue.count_data
   end
 
   def clear
-    @queue.clear
+    @queue.clear_data
   end
 
   def print

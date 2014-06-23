@@ -3,6 +3,8 @@ require './lib/attendee_repository'
 require './lib/attendee'
 require './lib/help'
 
+require 'pry'
+
 class CLI
   attr_reader :command,
               :parameters,
@@ -11,11 +13,12 @@ class CLI
               :event_reporter
 
   def initialize
-    @event_reporter = nil
     @command        = ""
     @queue_command  = ""
     @find_command   = ""
     @parameters     = ""
+    @queue ||= TheQueue.new
+    @event_reporter ||= EventReporter.new(@queue)
   end
 
   def self.run
@@ -38,7 +41,9 @@ class CLI
     elsif parts[0] == 'queue'
       assign_queue_instructions(parts)
     elsif parts[0] == 'help'
-      if parts[1]
+      if parts[2]
+        assign_queue_help_instructions(parts)
+      elsif parts[1]
         assign_help_instructions(parts)
       end
     end
@@ -86,14 +91,16 @@ class CLI
     end
   end
 
-  def assign_help_instructions(parts)
+  def assign_help_instructions
     case parts[1]
     when 'find'
       assign_help_parameter(parts, 1)
     when 'load'
       assign_help_parameter(parts, 1)
     end
+  end
 
+  def assign_queue_help_instructions(parts)
     case parts[1..2].join(" ")
     when 'queue count'
       assign_help_parameter(parts, 2)
@@ -126,14 +133,7 @@ class CLI
         execute_queue_command
     when 'load'
       repository = AttendeeRepository.load(parameters, Attendee)
-      @event_reporter = EventReporter.new(repository)
-      puts "Loaded #{parameters}"
-      # At this point the current cli instance will have @event_reporter loaded
-      # with the specified file, and all possible actions will be called as
-      # event_reporter.find, event_reporter.queue_print_by, etc.
-      #
-      # This will also reinitialize @event_reporter with the new specified file
-      # when load is called multiple times within a single CLI instance.
+      @event_reporter = EventReporter.new(repository, @queue)
     when 'find'
       event_reporter.find(find_command, parameters)
     when 'help'
@@ -145,7 +145,7 @@ class CLI
     end
   end
 
-  def execute_queue_command#(can be private)
+  def execute_queue_command
     case queue_command
     when 'count'
       event_reporter.count

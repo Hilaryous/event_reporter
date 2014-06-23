@@ -19,11 +19,12 @@ class EventReporterTest < Minitest::Test
   end
 
   def test_it_executes_count
-    assert_equal 3, @queue.count
+    assert_equal 3, @queue.count_data
   end
 
   def test_it_executes_clear
-    assert 0, @queue.clear.count
+    @queue.clear_data
+    assert 0, @queue.count_data
   end
 
   def test_it_executes_print
