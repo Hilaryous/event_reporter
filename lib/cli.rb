@@ -108,26 +108,26 @@ class CLI
 
   def execute_instructions
     case command
-      when 'queue'
+    when 'queue'
         execute_queue_command
-      when 'load'
-        repository = AttendeeRepository.load(parameters, Attendee)
-        @event_reporter = EventReporter.new(repository)
-        puts "Loaded #{parameters}"
-        # At this point the current cli instance will have @event_reporter loaded
-        # with the specified file, and all possible actions will be called as
-        # event_reporter.find, event_reporter.queue_print_by, etc.
-        #
-        # This will also reinitialize @event_reporter with the new specified file
-        # when load is called multiple times within a single CLI instance.
-      when 'find'
-        event_reporter.find(find_command, parameters)
-      when 'help'
-        if @parameters == ''
-          'help'
-        else
-          execute_help_command
-        end
+    when 'load'
+      repository = AttendeeRepository.load(parameters, Attendee)
+      @event_reporter = EventReporter.new(repository)
+      puts "Loaded #{parameters}"
+      # At this point the current cli instance will have @event_reporter loaded
+      # with the specified file, and all possible actions will be called as
+      # event_reporter.find, event_reporter.queue_print_by, etc.
+      #
+      # This will also reinitialize @event_reporter with the new specified file
+      # when load is called multiple times within a single CLI instance.
+    when 'find'
+      event_reporter.find(find_command, parameters)
+    when 'help'
+      if @parameters == ''
+        'help'
+      else
+        execute_help_command
+      end
     end
   end
 
