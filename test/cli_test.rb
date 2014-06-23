@@ -105,7 +105,7 @@ class CLITest < Minitest::Test
     input = 'find last_name smith'
     result = process_and_execute(input)
     puts "result: #{result}"
-    assert_equal 'attribute last_name', result
+    assert_equal 'attribute: last_name', result
   end
 
 end

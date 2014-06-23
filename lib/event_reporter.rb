@@ -4,7 +4,7 @@ class EventReporter
   end
 
   def find(attribute, value='filename')
-    "attribute #{attribute}"
+    "attribute: #{attribute}"
   end
 end
 

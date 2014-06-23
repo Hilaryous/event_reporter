@@ -178,7 +178,7 @@ class CLI
     end
   end
 
-  def run
+  def self.run
     CLI.new.start
   end
 end
