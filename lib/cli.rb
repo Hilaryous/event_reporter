@@ -151,7 +151,7 @@ class CLI
     when 'queue count'
       Help.count
     when 'queue clear'
-      Help.clea
+      Help.clear
     when 'queue print'
       Help.printer
     when 'queue save to'
