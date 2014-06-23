@@ -2,7 +2,7 @@ gem 'minitest', '~> 5.2'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/cli'
-require 'pry'
+# require 'pry'
 
 class CLITest < Minitest::Test
 
@@ -14,7 +14,7 @@ class CLITest < Minitest::Test
   def process_and_execute(input)
     parts = cli.process_input(input)
     cli.assign_instructions(parts)
-    result = cli.execute_instructions
+    cli.execute_instructions
   end
 
   def process_and_assign(input)
@@ -24,10 +24,6 @@ class CLITest < Minitest::Test
 
   def test_it_exist
     assert cli
-  end
-
-  def test_it_starts
-    assert "Event Manager Initialized!", cli.start
   end
 
   def test_it_has_attributes
@@ -93,6 +89,23 @@ class CLITest < Minitest::Test
     assert_equal 'queue', cli.command
     assert_equal 'print by', cli.queue_command
     assert_equal 'parameters', cli.parameters
+  end
+
+  def test_it_loads_data
+    input = 'load ./test/fixtures/event_attendees.csv'
+    result = process_and_execute(input)
+
+    assert cli.event_reporter
+  end
+
+  def test_it_executes_the_find_command
+    input = 'load ./test/fixtures/event_attendees.csv'
+    result = process_and_execute(input)
+
+    input = 'find last_name smith'
+    result = process_and_execute(input)
+    puts "result: #{result}"
+    assert_equal 'attribute: last_name', result
   end
 
 end
