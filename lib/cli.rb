@@ -1,15 +1,17 @@
 require 'pry'
 class CLI
+
+  # Removed @help_command and just used @parameters to store that same data.
+  # Seemed to fit logically because things like queue and find when passed to
+  # help are treated as parameters and not commands.
   attr_reader :command,
-              :parameter,
-              :queue_command,
-              :help_command
+              :parameters,
+              :queue_command
 
   def initialize
     @command       = ""
     @queue_command = ""
-    @help_command  = ""
-    @parameter     = ""
+    @parameters    = ""
   end
 
   def start
@@ -23,7 +25,7 @@ class CLI
   def assign_instructions(parts)
     @command = parts[0]
     if parts[0] == 'load' || parts[0] == 'find'
-      @parameter = parts[1]
+      @parameters = parts[1]
     elsif parts[0] == 'queue'
       assign_queue_instructions(parts)
     elsif parts[0] == 'help'
@@ -34,85 +36,114 @@ class CLI
   end
 
   def assign_queue_instructions(parts)
-    if parts[1]== 'count'
+    case parts[1]
+      when 'count'
+        assign_queue_command(parts, 1)
+      when 'clear'
+        assign_queue_command(parts, 1)
+      when 'print'
+        assign_queue_command(parts, 1)
+    end
+
+    case parts[1..2].join(" ")
+      when 'print by'
+        assign_queue_command(parts, 2)
+      when 'save to'
+        assign_queue_command(parts, 2)
+    end
+  end
+
+  def assign_queue_command(parts, n) # n is number of params to be added
+    if n == 1
       @queue_command = parts[1]
-    elsif parts[1]== 'clear'
-      @queue_command = parts[1]
-    elsif parts[1..2].join(' ') == 'print by'
-      @queue_command = parts[1..2].join(' ')
-    elsif parts[1]== 'print'
-      @queue_command = parts[1]
-    elsif parts[1..2].join(' ') == 'save to'
-      @queue_command = parts[1..2].join(' ')
+      @parameters = parts[2..-1].join(" ")
+    elsif n == 2
+      @queue_command = parts[1..2].join(" ")
+      @parameters = parts[3..-1].join(" ")
     end
   end
 
   def assign_help_instructions(parts)
-    if parts[1..2].join(' ') == 'queue count'
-      @help_command = parts[1..2].join(' ')
-    elsif parts[1..2].join(' ') == 'queue clear'
-      @help_command = parts[1..2].join(' ')
-    elsif parts[1..2].join(' ') == 'queue print'
-      @help_command = parts[1..2].join(' ')
-    elsif parts[1..3].join(' ') == 'queue print by'
-      @help_command = parts[1..3].join(' ')
-    elsif parts[1..3].join(' ') == 'queue save to'
-      @help_command = parts[1..3].join(' ')
-    elsif parts[1].join(' ') == 'find'
-      @help_command = parts[1].join(' ')
-    elsif parts[1] == 'load'
-      @help_command = parts[1]
+    case parts[1..2].join(" ")
+      when 'queue count'
+        assign_help_parameter(parts, 2)
+      when 'queue clear'
+        assign_help_parameter(parts, 2)
+      when 'queue print'
+        assign_help_parameter(parts, 2)
+    end
+
+    case parts[1..3].join(" ")
+      when 'queue print by'
+        assign_help_parameter(parts, 3)
+      when 'queue save to'
+        assign_help_parameter(parts, 3)
+    end
+
+    case parts[1]
+      when 'find'
+        assign_help_parameter(parts, 1)
+      when 'load'
+        assign_help_parameter(parts, 1)
     end
   end
 
-  def execute_command
+  def assign_help_parameter(parts, n)
+    case n
+      when 1 then @parameters = parts[1]
+      when 2 then @parameters = parts[1..2].join(" ")
+      when 3 then @parameters = parts[1..3].join(" ")
+    end
+  end
+
+  def execute_instructions
     case command
-    when 'queue'
-      execute_queue_command
-    when 'load'
-      'load'
-    when 'find'
-      'find'Find.find(parameters)
-    when 'help'
-      if help_command == ""
-        'help'
-      else
-        execute_help_command
-      end
+      when 'queue'
+        execute_queue_command
+      when 'load'
+        'load'
+      when 'find'
+        'find'
+      when 'help'
+        if @parameters == ''
+          'help'
+        else
+          execute_help_command
+        end
     end
   end
 
   def execute_queue_command
     case queue_command
-    when 'count'
-      'counting queue'
-    when 'save to'
-      'saving queue'
-    when 'print by'
-      'printing'
-    when 'print'
-      'print'
-    when 'clear'
-      'clear'
+      when 'count'
+        'counting queue'
+      when 'save to'
+        'saving queue'
+      when 'print by'
+        'printing'
+      when 'print'
+        'print'
+      when 'clear'
+        'clear'
     end
   end
 
   def execute_help_command
-    case help_command
-    when 'queue count'
-      "use it this way"
-    when 'queue clear'
-      'use it this way'
-    when 'queue print'
-      'use it this way'
-    when 'queue save to'
-      'use it this way'
-    when 'queue print by'
-      'use it this way'
-    when 'find'
-      'use it this way'
-    when 'load'
-      'use it this way'
+    case parameters
+      when 'queue count'
+        "use it this way"
+      when 'queue clear'
+        'use it this way'
+      when 'queue print'
+        'use it this way'
+      when 'queue save to'
+        'use it this way'
+      when 'queue print by'
+        'use it this way'
+      when 'find'
+        'use it this way'
+      when 'load'
+        'use it this way'
     end
   end
 end
