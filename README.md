@@ -1,6 +1,6 @@
 TODO:
 
--  find-class
--  load-class
+-  find-class (in progess)
+-  load-class (done)
 -  queue-class(probably divide up by queue_commands)
--  help-module
+-  help-module (done)
