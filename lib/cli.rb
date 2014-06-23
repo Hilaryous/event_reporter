@@ -4,10 +4,6 @@ require './lib/attendee'
 require './lib/help'
 
 class CLI
-
-  # Removed @help_command and just used @parameters to store that same data.
-  # Seemed to fit logically because things like queue and find when passed to
-  # help are treated as parameters and not commands.
   attr_reader :command,
               :parameters,
               :queue_command,
@@ -152,15 +148,15 @@ class CLI
   def execute_queue_command#(can be private)
     case queue_command
     when 'count'
-      'count'
+      event_reporter.count
     when 'save to'
-      'saving queue'
+      event_reporter.save_to
     when 'print by'
-      'printing'
+      event_reporter.print_by
     when 'print'
-      'print'
+      event_reporter.print_data_table
     when 'clear'
-      'clear'
+      event_reporter.clear
     end
   end
 
