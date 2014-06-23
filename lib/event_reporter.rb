@@ -3,7 +3,8 @@ class EventReporter
     @repository = repository
   end
 
-  def find(filename)
-    'find method in EventReporter'
+  def find(attribute, value='filename')
+    "attribute #{attribute}"
   end
 end
+

@@ -12,13 +12,15 @@ class CLI
   attr_reader :command,
               :parameters,
               :queue_command,
+              :find_command,
               :event_reporter
 
   def initialize
     @event_reporter = nil
-    @command       = ""
-    @queue_command = ""
-    @parameters    = ""
+    @command        = ""
+    @queue_command  = ""
+    @find_command   = ""
+    @parameters     = ""
   end
 
   def process_input(input)
@@ -27,8 +29,11 @@ class CLI
 
   def assign_instructions(parts)
     @command = parts[0]
-    if parts[0] == 'load' || parts[0] == 'find'
+    if parts[0] == 'load'
       @parameters = parts[1]
+    elsif parts[0] == 'find'
+      @find_command = parts[1]
+      @parameters = parts[2]
     elsif parts[0] == 'queue'
       assign_queue_instructions(parts)
     elsif parts[0] == 'help'
@@ -106,8 +111,15 @@ class CLI
       when 'load'
         repository = AttendeeRepository.load(parameters, Attendee)
         @event_reporter = EventReporter.new(repository)
+        puts "Loaded #{parameters}"
+        # At this point the current cli instance will have @event_reporter loaded
+        # with the specified file, and all possible actions will be called as
+        # event_reporter.find, event_reporter.queue_print_by, etc.
+        #
+        # This will also reinitialize @event_reporter with the new specified file
+        # when load is called multiple times within a single CLI instance.
       when 'find'
-        'find'
+        event_reporter.find(find_command, parameters)
       when 'help'
         if @parameters == ''
           'help'

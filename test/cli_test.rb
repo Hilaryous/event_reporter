@@ -94,8 +94,18 @@ class CLITest < Minitest::Test
   def test_it_loads_data
     input = 'load ./test/fixtures/event_attendees.csv'
     result = process_and_execute(input)
-    puts cli.event_reporter.class
+
     assert cli.event_reporter
+  end
+
+  def test_it_executes_the_find_command
+    input = 'load ./test/fixtures/event_attendees.csv'
+    result = process_and_execute(input)
+
+    input = 'find last_name smith'
+    result = process_and_execute(input)
+    puts "result: #{result}"
+    assert_equal 'attribute last_name', result
   end
 
 end
