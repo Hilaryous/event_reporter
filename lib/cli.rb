@@ -1,4 +1,7 @@
 require 'pry'
+require 'entry_reporter'
+
+
 class CLI
 
   # Removed @help_command and just used @parameters to store that same data.
@@ -9,6 +12,7 @@ class CLI
               :queue_command
 
   def initialize
+    @entry_reporter = nil
     @command       = ""
     @queue_command = ""
     @parameters    = ""
@@ -145,5 +149,34 @@ class CLI
       when 'load'
         'use it this way'
     end
+  end
+
+
+  # just load a file once
+  def start
+    puts "Entry Reporter: testing load"
+    command = ''
+    while command != 'q'
+
+      puts "load a file:"
+      puts "> "
+      parts = process_input(gets.chomp)
+      assign_instructions(parts)
+
+      case command
+      when 'load'
+        'load'
+    #     @entry_reporter = EntryReporter.new(parameters).start
+    #     operations_on_loaded_data
+    #   end
+    end
+  end
+
+  def operations_on_loaded_data
+
+  end
+
+  def run
+    CLI.new.start
   end
 end

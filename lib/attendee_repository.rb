@@ -1,5 +1,6 @@
 require 'csv'
 require 'pry'
+require 'queue'
 
 class AttendeeRepository
   def self.load(filename, klass)
@@ -18,5 +19,10 @@ class AttendeeRepository
   def initialize(objects)
     @objects = objects
   end
+
+  # def find(attribute, value)
+  #   results = objects.select { |object| object.send(attribute) == value }
+  #   Queue.new(results)
+  # end
 end
 
