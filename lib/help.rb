@@ -19,6 +19,10 @@ module Help
     "Empty the queue"
   end
 
+  def self.printer
+    "Print out a tab-delimited data table with a header row"
+  end
+
   def self.save_to
     "Export the current queue to the specified filename as a CSV"
   end

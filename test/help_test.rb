@@ -18,6 +18,10 @@ class HelpTest < Minitest::Test
     assert_match /Empty/, Help.clear
   end
 
+  def test_prints_help_queue_print
+    assert_match /Print out/, Help.printer
+  end
+
   def test_prints_help_queue_save_to
     assert_match /Export/, Help.save_to
   end

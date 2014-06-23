@@ -133,19 +133,19 @@ class CLI
   def execute_help_command
     case parameters
     when 'queue count'
-      "use it this way"
+      Help.count
     when 'queue clear'
-      'use it this way'
+      Help.clea
     when 'queue print'
-      'use it this way'
+      Help.printer
     when 'queue save to'
-      'use it this way'
+      Help.save_to
     when 'queue print by'
-      'use it this way'
+      Help.print_by
     when 'find'
-      'use it this way'
+      Help.find
     when 'load'
-      'use it this way'
+      Help.load_file
     end
   end
 end
