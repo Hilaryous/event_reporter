@@ -4,6 +4,7 @@ class EventReporter
   end
 
   def find(attribute, value='filename')
+    # when implemented will call AttendeeRepository#find
     "attribute: #{attribute}"
   end
 end

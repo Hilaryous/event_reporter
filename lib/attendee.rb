@@ -22,4 +22,9 @@ class Attendee
     @state = data[:state]
     @zipcode = data[:zipcode]
   end
+
+  # clean all the things
+
+  def clean_zipcode
+  end
 end
