@@ -12,14 +12,14 @@ class CLITest < Minitest::Test
   end
 
   def process_and_execute(input)
-    parts = cli.process_input(input)
-    cli.assign_instructions(parts)
-    cli.execute_instructions
+    parts = cli.send(:process_input, input)
+    cli.send(:assign_instructions, parts)
+    cli.send(:execute_instructions)
   end
 
   def process_and_assign(input)
-    parts = cli.process_input(input)
-    cli.assign_instructions(parts)
+    parts = cli.send(:process_input, input)
+    cli.send(:assign_instructions, parts)
   end
 
   def test_it_exist
@@ -27,14 +27,14 @@ class CLITest < Minitest::Test
   end
 
   def test_it_has_attributes
-    assert cli.command
-    assert cli.queue_command
-    assert cli.parameters
+    assert cli.send(:command)
+    assert cli.send(:queue_command)
+    assert cli.send(:parameters)
   end
 
   def test_it_processes_input
     input  = 'find zipcode 80203'
-    result = cli.process_input(input)
+    result = cli.send(:process_input, input)
 
     assert_equal ['find', 'zipcode', '80203'], result
   end
@@ -43,22 +43,22 @@ class CLITest < Minitest::Test
     input  = 'load filename'
     result = process_and_assign(input)
 
-    assert_equal 'load', cli.command
-    assert_equal 'filename', cli.parameters
+    assert_equal 'load', cli.send(:command)
+    assert_equal 'filename', cli.send(:parameters)
   end
 
   def test_it_assigns_queue_instructions
     input  = 'queue count'
     result = process_and_assign(input)
 
-    assert_equal 'count', cli.queue_command
+    assert_equal 'count', cli.send(:queue_command)
   end
 
   def test_it_assigns_help_instructions
     input  = 'help queue count'
     result = process_and_assign(input)
 
-    assert_equal 'queue count', cli.parameters
+    assert_equal 'queue count', cli.send(:parameters)
   end
 
   def test_it_exectues_instructions
@@ -86,16 +86,16 @@ class CLITest < Minitest::Test
     input = 'queue print by parameters'
     result = process_and_assign(input)
 
-    assert_equal 'queue', cli.command
-    assert_equal 'print by', cli.queue_command
-    assert_equal 'parameters', cli.parameters
+    assert_equal 'queue', cli.send(:command)
+    assert_equal 'print by', cli.send(:queue_command)
+    assert_equal 'parameters', cli.send(:parameters)
   end
 
   def test_it_loads_data
     input = 'load ./test/fixtures/event_attendees.csv'
     result = process_and_execute(input)
 
-    assert cli.event_reporter
+    assert cli.send(:event_reporter)
   end
 
   def test_it_executes_the_find_command
