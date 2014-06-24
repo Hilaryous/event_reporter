@@ -2,6 +2,7 @@ require './lib/event_reporter'
 require './lib/attendee_repository'
 require './lib/attendee'
 require './lib/help'
+require './lib/queue'
 require 'csv'
 
 class CLI
@@ -155,7 +156,7 @@ class CLI
     when 'queue'
       execute_queue_command
     when 'load'
-      repository = AttendeeRepository.load_csv(parameters, Attendee)
+      repository = AttendeeRepository.load(parameters, Attendee)
       @event_reporter = EventReporter.new(repository, @queue)
     when 'find'
       event_reporter.find(find_command, parameters)
@@ -202,5 +203,3 @@ class CLI
     end
   end
 end
-
-test = CLI.new.start
