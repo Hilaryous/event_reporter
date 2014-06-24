@@ -19,8 +19,7 @@ class CLI
     @find_command   = ""
     @parameters     = ""
     @queue ||= TheQueue.new
-    # @event_reporter = []
-    @event_reporter ||= EventReporter.new(@queue)
+    @event_reporter ||= EventReporter.new(AttendeeRepository.load('./lib/data/event_attendees.csv', Attendee), @queue)
   end
 
   def self.run
@@ -130,7 +129,7 @@ class CLI
   def execute_instructions
     case command
     when 'queue'
-        execute_queue_command
+      execute_queue_command
     when 'load'
       repository = AttendeeRepository.load(parameters, Attendee)
       @event_reporter = EventReporter.new(repository, @queue)
@@ -148,7 +147,11 @@ class CLI
   def execute_queue_command
     case queue_command
     when 'count'
-      event_reporter.count
+      if event_reporter
+        event_reporter.count
+      else
+        0
+      end
     when 'save to'
       event_reporter.save_to(@parameters)
     when 'print by'
@@ -194,7 +197,3 @@ class CLI
     end
   end
 end
-
-test = CLI.new
-parts = test.send(:process_input, 'queue save to empty')
-test.send(:assign_instructions, parts)

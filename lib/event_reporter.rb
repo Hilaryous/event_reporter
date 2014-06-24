@@ -2,7 +2,7 @@ require './lib/attendee_repository'
 
 class EventReporter
   attr_reader :queue
-  def initialize(repository=AttendeeRepository.load(Attendee), queue)
+  def initialize(repository, queue)
     @repository = repository
     @queue = queue
   end
