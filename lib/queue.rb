@@ -19,8 +19,28 @@ class TheQueue
     @current.clear
   end
 
+  ["LAST NAME", "FIRST NAME", "EMAIL", "ZIPCODE", "CITY", "STATE", "ADDRESS", "PHONE"]
+
   def print_data_table
-    "Hi"
+    puts "LAST NAME".ljust(15) +
+    "FIRST NAME".ljust(15) +
+    "EMAIL".ljust(40) +
+    "ZIPCODE".ljust(15) +
+    "CITY".ljust(15) +
+    "STATE".ljust(15) +
+    "ADDRESS".ljust(15) +
+    "PHONE".ljust(15)
+
+    current.each do |attendee|
+      puts attendee.last_name.ljust(15) +
+      attendee.first_name.ljust(15) +
+      attendee.email_address.ljust(40) +
+      attendee.zipcode.ljust(15) +
+      attendee.city.ljust(20) +
+      attendee.state.ljust(15)
+      # attendee.street.ljust(15) +
+      # attendee.homephone.ljust(15)
+    end
   end
 
   def print_by

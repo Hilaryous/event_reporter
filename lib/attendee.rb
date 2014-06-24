@@ -60,7 +60,8 @@ class Attendee
 
   def clean_city(city)
     unless city.nil?
-      city.capitalize
+      parts = city.to_s.split(' ')
+      parts.map { |part| part.capitalize }.join("")
     end
   end
 
