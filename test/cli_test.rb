@@ -104,7 +104,7 @@ class CLITest < Minitest::Test
     input = 'queue save to empty'
     result = process_and_execute(input)
 
-    assert_equal nil, result
+    assert_match /save/, result
 
   end
 
