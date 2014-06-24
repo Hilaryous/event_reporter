@@ -26,7 +26,7 @@ class TheQueue
     "FIRST NAME".ljust(15) +
     "EMAIL".ljust(40) +
     "ZIPCODE".ljust(15) +
-    "CITY".ljust(15) +
+    "CITY".ljust(20) +
     "STATE".ljust(15) +
     "ADDRESS".ljust(15) +
     "PHONE".ljust(15)
@@ -37,9 +37,9 @@ class TheQueue
       attendee.email_address.ljust(40) +
       attendee.zipcode.ljust(15) +
       attendee.city.ljust(20) +
-      attendee.state.ljust(15)
-      # attendee.street.ljust(15) +
-      # attendee.homephone.ljust(15)
+      attendee.state.ljust(15) +
+      attendee.street.ljust(30) +
+      attendee.homephone.ljust(15)
     end
   end
 

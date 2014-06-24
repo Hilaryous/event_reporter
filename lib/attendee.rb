@@ -36,17 +36,7 @@ class Attendee
   end
 
   def clean_homephone(phone_number)
-    if phone_number.nil? || phone_number.length < 10
-      phone_number = "0000000000"
-    elsif phone_number.length == 10
-      phone_number = phone_number[0..9]
-    elsif phone_number.length == 11
-      if phone_number[0] == "1"
-         phone_number = phone_number[1..10]
-      elsif phone_number[0] != "1"
-         phone_number = "0000000000"
-      end
-    end
+    phone_number.delete("-(). ")
   end
 
   def clean_street(street)
