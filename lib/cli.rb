@@ -31,7 +31,7 @@ class CLI
     @find_command   = ""
     @parameters     = ""
     @queue ||= TheQueue.new
-    @event_reporter ||= EventReporter.new(@queue)
+    @event_reporter = nil
   end
 
   def self.run
@@ -100,7 +100,7 @@ class CLI
     end
   end
 
-  def assign_queue_command(parts, n) # n is number of params to be added
+  def assign_queue_command(parts, n)
     if n == 1
       @queue_command = parts[1]
     elsif n == 2
@@ -156,13 +156,16 @@ class CLI
     when 'queue'
       execute_queue_command
     when 'load'
-      repository = AttendeeRepository.load(parameters, Attendee)
+      repository = AttendeeRepository.load(parameters='./data/event_attendees.csv', Attendee)
       @event_reporter = EventReporter.new(repository, @queue)
+      loaded 'file'
     when 'find'
+      if event_reporter
       event_reporter.find(find_command, parameters)
+      end
     when 'help'
       if @parameters == ''
-        print Help.general
+        puts Help.general
       else
         execute_help_command
       end
@@ -170,38 +173,38 @@ class CLI
   end
 
   def execute_queue_command
-    case queue_command
-    when 'count'
-      puts event_reporter.count_data
-    when 'save to'
-      event_reporter.save_to(@parameters)
-    when 'print by'
-      puts event_reporter.print_by
-    when 'print'
-      puts event_reporter.print_data_table
-    when 'clear'
-      event_reporter.clear
+    if event_reporter
+      case queue_command
+      when 'count'
+        puts event_reporter.count_data
+      when 'save to'
+        event_reporter.save_to(@parameters)
+      when 'print by'
+        puts event_reporter.print_by
+      when 'print'
+        puts event_reporter.print_data_table
+      when 'clear'
+        event_reporter.clear
+      end
     end
   end
 
   def execute_help_command
     case parameters
     when 'queue count'
-      print Help.count
+      puts Help.count
     when 'queue clear'
-      print Help.clear
+      puts Help.clear
     when 'queue print'
-      print Help.printer
+      puts Help.printer
     when 'queue save to'
-      print Help.save_to
+      puts Help.save_to
     when 'queue print by'
-      print Help.print_by
+      puts Help.print_by
     when 'find'
-      print Help.find
+      puts Help.find
     when 'load'
-      print Help.load_file
+      puts Help.load_file
     end
   end
 end
-
-test = CLI.new.start
