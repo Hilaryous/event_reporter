@@ -12,7 +12,7 @@ class EventReporter
     results.each { |i| @queue.current << i }
   end
 
-  def count
+  def count_data
     @queue.count_data
   end
 
@@ -20,8 +20,8 @@ class EventReporter
     @queue.clear_data
   end
 
-  def print
-    @queue.print_data
+  def print_data_table
+    @queue.print_data_table
   end
 
   def print_by

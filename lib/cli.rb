@@ -26,6 +26,17 @@ class CLI
     CLI.new.start
   end
 
+  def start
+    puts "Entry Reporter"
+    while command != 'q'
+      puts "enter input:"
+      parts = process_input(gets.chomp)
+      assign_instructions(parts)
+      execute_instructions
+    end
+    puts "Quitting Event Reporter"
+  end
+
   private
 
   def process_input(input)
@@ -46,6 +57,8 @@ class CLI
         assign_queue_help_instructions(parts)
       elsif parts[1]
         assign_help_instructions(parts)
+      else
+        @command = parts[0]
       end
     end
   end
@@ -91,7 +104,7 @@ class CLI
     end
   end
 
-  def assign_help_instructions
+  def assign_help_instructions(parts)
     case parts[1]
     when 'find'
       assign_help_parameter(parts, 1)
@@ -131,13 +144,13 @@ class CLI
     when 'queue'
       execute_queue_command
     when 'load'
-      repository = AttendeeRepository.load(parameters, Attendee)
+      repository = AttendeeRepository.load_csv(parameters, Attendee)
       @event_reporter = EventReporter.new(repository, @queue)
     when 'find'
       event_reporter.find(find_command, parameters)
     when 'help'
       if @parameters == ''
-        'help'
+        print Help.general
       else
         execute_help_command
       end
@@ -147,17 +160,13 @@ class CLI
   def execute_queue_command
     case queue_command
     when 'count'
-      if event_reporter
-        event_reporter.count
-      else
-        0
-      end
+      puts event_reporter.count_data
     when 'save to'
       event_reporter.save_to(@parameters)
     when 'print by'
-      event_reporter.print_by
+      puts event_reporter.print_by
     when 'print'
-      event_reporter.print_data_table
+      puts event_reporter.print_data_table
     when 'clear'
       event_reporter.clear
     end
@@ -166,34 +175,21 @@ class CLI
   def execute_help_command
     case parameters
     when 'queue count'
-      Help.count
+      print Help.count
     when 'queue clear'
-      Help.clear
+      print Help.clear
     when 'queue print'
-      Help.printer
+      print Help.printer
     when 'queue save to'
-      Help.save_to
+      print Help.save_to
     when 'queue print by'
-      Help.print_by
+      print Help.print_by
     when 'find'
-      Help.find
+      print Help.find
     when 'load'
-      Help.load_file
-    end
-  end
-
-
-  # just load a file once
-  def start
-    puts "Entry Reporter"
-    command = '> '
-
-    while command != 'q'
-      puts "load a file:"
-      puts "> "
-      parts = process_input(gets.chomp)
-      assign_instructions(parts)
-      execute_instructions
+      print Help.load_file
     end
   end
 end
+
+test = CLI.new.start

@@ -64,21 +64,21 @@ class CLITest < Minitest::Test
     input  = 'help'
     result = process_and_execute(input)
 
-    assert_equal 'help', result
+    assert_equal nil, result
   end
 
   def test_it_executes_queue_commands
     input  = 'queue count'
     result = process_and_execute(input)
 
-    assert_equal 0, result
+    assert_equal nil, result
   end
 
   def test_it_executes_help_commands
     input  = 'help queue count'
     result = process_and_execute(input)
 
-    assert_match /Output/, result
+    assert_equal nil, result
   end
 
   def test_assign_queue_command_assigns_parameters
@@ -104,7 +104,7 @@ class CLITest < Minitest::Test
     input = 'queue save to empty'
     result = process_and_execute(input)
 
-    assert_equal 2, result
+    assert_equal nil, result
 
   end
 

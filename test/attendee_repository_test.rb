@@ -8,7 +8,7 @@ class AttendeeRepositoryTest < Minitest::Test
   attr_reader :attendee_repo, :filename
   def setup
     @filename = './test/fixtures/event_attendees.csv'
-    @attendee_repo = AttendeeRepository.load(filename, Attendee)
+    @attendee_repo = AttendeeRepository.load_csv(filename, Attendee)
   end
 
   def test_it_exists
