@@ -97,15 +97,26 @@ class CLITest < Minitest::Test
     assert cli.send(:event_reporter)
   end
 
+  def test_it_execute_the_save_to_command
+    input = 'load ./test/fixtures/event_attendees.csv'
+    result = process_and_execute(input)
+
+    input = 'queue save to empty'
+    result = process_and_execute(input)
+
+    assert_equal 'attribute: last_name', result
+
+  end
+
   def test_it_executes_the_find_command
-    # skip
+    skip
     input = 'load ./test/fixtures/event_attendees.csv'
     result = process_and_execute(input)
 
     input = 'find last_name smith'
     result = process_and_execute(input)
 
-    assert_equal 'attribute: last_name', result
+    assert result
   end
 
 end

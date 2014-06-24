@@ -71,7 +71,6 @@ class CLI
     when 'save to'
       assign_queue_command(parts, 2)
       assign_queue_parameters(parts, 2)
-
     end
   end
 
@@ -150,7 +149,7 @@ class CLI
     when 'count'
       event_reporter.count
     when 'save to'
-      event_reporter.save_to
+      event_reporter.save_to(@parameters)
     when 'print by'
       event_reporter.print_by
     when 'print'
@@ -194,3 +193,7 @@ class CLI
     end
   end
 end
+
+test = CLI.new
+parts = test.send(:process_input, 'queue save to empty')
+test.send(:assign_instructions, parts)

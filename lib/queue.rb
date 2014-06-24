@@ -24,7 +24,11 @@ class TheQueue
     "Hello"
   end
 
-  def save_to
-    "Hey"
+  def save_to(filename,text="Hi")
+    Dir.mkdir("output") unless Dir.exists?("ouput")
+
+    filename = "#{filename}.csv"
+
+    File.open(filename, 'w'){|f| f.write(text)}
   end
 end

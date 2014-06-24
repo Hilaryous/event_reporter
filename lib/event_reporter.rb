@@ -28,7 +28,7 @@ class EventReporter
     @queue.print_by
   end
 
-  def save_to
-    @queue.save_to
+  def save_to(filename)
+    @queue.save_to(filename)
   end
 end

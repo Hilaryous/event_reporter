@@ -4,6 +4,8 @@ require 'minitest/pride'
 
 require './lib/attendee'
 
+require 'pry'
+
 class AttendeeTest < Minitest::Test
   def entry
       {
@@ -15,13 +17,14 @@ class AttendeeTest < Minitest::Test
         homephone:     "1123456789",
         street:        '109 street',
         city:          'atlanta',
-        state:         'georgia',
+        state:         'ga',
         zipcode:       '12345'
       }
   end
 
   def test_attributes
     attendee = Attendee.new(entry)
+    binding.pry
     assert_equal 1, attendee.id
     assert_equal 'July 1, 2013', attendee.regdate
     assert_equal 'Jon', attendee.first_name
