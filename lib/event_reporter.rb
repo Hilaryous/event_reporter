@@ -28,8 +28,8 @@ class EventReporter
     @queue.print_data_table
   end
 
-  def print_by
-    @queue.print_by
+  def print_by(attribute)
+    @queue.print_by(attribute)
   end
 
   def save_to(filename)

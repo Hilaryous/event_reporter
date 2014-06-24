@@ -180,7 +180,7 @@ class CLI
     when 'save to'
       event_reporter.save_to(@parameters)
     when 'print by'
-      event_reporter.print_by
+      event_reporter.print_by(@parameters)
     when 'print'
       event_reporter.print_data_table
     when 'clear'

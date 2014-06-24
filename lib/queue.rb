@@ -21,7 +21,7 @@ class TheQueue
 
   ["LAST NAME", "FIRST NAME", "EMAIL", "ZIPCODE", "CITY", "STATE", "ADDRESS", "PHONE"]
 
-  def print_data_table
+  def print_data_table(data=@current)
     puts "LAST NAME".ljust(15) +
     "FIRST NAME".ljust(15) +
     "EMAIL".ljust(40) +
@@ -31,7 +31,7 @@ class TheQueue
     "ADDRESS".ljust(25) +
     "PHONE".ljust(15)
 
-    current.each do |attendee|
+    data.each do |attendee|
       puts attendee.last_name.ljust(15) +
       attendee.first_name.ljust(15) +
       attendee.email_address.ljust(40) +
@@ -43,10 +43,9 @@ class TheQueue
     end
   end
 
-  # def print_by(attribute)
-  #   current.sort_by { |i| i.attribute }
-  #   print_data_table
-  # end
+  def print_by(attribute)
+    print_data_table(current.sort_by { |i| i.send(attribute) })
+  end
 
   def save_to(filename)
     Dir.mkdir("output") unless Dir.exists?("output")
