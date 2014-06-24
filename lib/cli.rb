@@ -19,7 +19,7 @@ class CLI
     @find_command   = ""
     @parameters     = ""
     @queue ||= TheQueue.new
-    @event_reporter ||= EventReporter.new(AttendeeRepository.load('./lib/data/event_attendees.csv', Attendee), @queue)
+    @event_reporter ||= EventReporter.new(@queue)
   end
 
   def self.run
