@@ -11,7 +11,6 @@ class TheQueue
   end
 
   def count_data
-    puts "made it to TheQueue#count_data"
     return @current.count
   end
 
@@ -36,6 +35,6 @@ class TheQueue
       csv << ["id", "RegDate", "last_name", "first_name", "email", "zipode", "city", "state", "address", "phone_number"]
       csv << @current.each {|attendee| attendee}
     end
-    puts "Your file has been saved to #{file_name}"
+    return "Your file has been saved to #{file_name}"
   end
 end

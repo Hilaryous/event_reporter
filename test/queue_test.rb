@@ -9,7 +9,7 @@ require './lib/event_reporter'
 class TheQueueTest < Minitest::Test
   attr_reader :find_results, :queue, :repo
   def setup
-    @repo = AttendeeRepository.load_csv('./test/fixtures/event_attendees.csv', Attendee)
+    @repo = AttendeeRepository.load('./test/fixtures/event_attendees.csv', Attendee)
     @event_reporter = EventReporter.new(repo, TheQueue.new)
     @queue = @event_reporter.queue
     @event_reporter.find(:first_name, 'Sarah')
@@ -38,6 +38,6 @@ class TheQueueTest < Minitest::Test
 
   def test_it_save_to
     filename = 'empty'
-    assert_equal nil, queue.save_to(filename)
+    assert_match /file/, queue.save_to(filename)
   end
 end

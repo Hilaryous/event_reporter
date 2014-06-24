@@ -4,8 +4,6 @@ require './lib/attendee'
 require './lib/help'
 require 'csv'
 
-require 'pry'
-
 class CLI
   attr_reader :command,
               :parameters,
