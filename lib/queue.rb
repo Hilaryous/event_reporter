@@ -28,7 +28,7 @@ class TheQueue
     "ZIPCODE".ljust(15) +
     "CITY".ljust(20) +
     "STATE".ljust(15) +
-    "ADDRESS".ljust(15) +
+    "ADDRESS".ljust(25) +
     "PHONE".ljust(15)
 
     current.each do |attendee|
@@ -38,14 +38,15 @@ class TheQueue
       attendee.zipcode.ljust(15) +
       attendee.city.ljust(20) +
       attendee.state.ljust(15) +
-      attendee.street.ljust(30) +
+      attendee.street.ljust(25) +
       attendee.homephone.ljust(15)
     end
   end
 
-  def print_by
-    "Hello"
-  end
+  # def print_by(attribute)
+  #   current.sort_by { |i| i.attribute }
+  #   print_data_table
+  # end
 
   def save_to(filename)
     Dir.mkdir("output") unless Dir.exists?("output")
