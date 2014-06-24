@@ -1,3 +1,5 @@
+require 'csv'
+
 class Attendee
   attr_reader :id,
               :regdate,
@@ -17,8 +19,8 @@ class Attendee
     @last_name = clean_last_name(data[:last_name])
     @email_address = data[:email_address]
     @homephone = clean_homephone(data[:homephone])
-    @street = clean_street(data[:street])
-    @city = clean_city(data[:city])
+    @street = data[:street]
+    @city = data[:city]
     @state = clean_state(data[:state])
     @zipcode = clean_zipcode(data[:zipcode])
   end
@@ -52,9 +54,8 @@ class Attendee
   def clean_street(street)
     parts = street.to_s.split(' ')
 
-    parts[1..-1].each do |i|
-      i.capitalize
-    end
+    parts[1..-1].each{ |part| part.capitalize}
+    parts[0..-1].join(' ')
   end
 
   def clean_city(city)

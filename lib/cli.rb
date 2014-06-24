@@ -2,6 +2,7 @@ require './lib/event_reporter'
 require './lib/attendee_repository'
 require './lib/attendee'
 require './lib/help'
+require 'csv'
 
 require 'pry'
 
@@ -18,6 +19,7 @@ class CLI
     @find_command   = ""
     @parameters     = ""
     @queue ||= TheQueue.new
+    # @event_reporter = []
     @event_reporter ||= EventReporter.new(@queue)
   end
 
@@ -115,7 +117,6 @@ class CLI
     when 'queue save to'
       assign_help_parameter(parts, 3)
     end
-    #merge queue helps into one method (private)
   end
 
   def assign_help_parameter(parts, n)

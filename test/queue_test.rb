@@ -37,6 +37,7 @@ class TheQueueTest < Minitest::Test
   end
 
   def test_it_save_to
-    assert_equal "Hey", queue.save_to
+    filename = 'empty'
+    assert_equal 2, queue.save_to(filename)
   end
 end
