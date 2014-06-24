@@ -1,5 +1,3 @@
-require 'csv'
-
 class Attendee
   attr_reader :id,
               :regdate,

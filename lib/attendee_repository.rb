@@ -1,6 +1,5 @@
 require 'csv'
 require './lib/attendee'
-require './lib/queue'
 
 class AttendeeRepository
   def self.load(filename='data/event_attendees.csv', klass)
@@ -16,10 +15,5 @@ class AttendeeRepository
 
   def find(attribute, value)
     attendee_collection.select { |object| object.send(attribute) == value }
-    # @queue ||= TheQueue.new
-    # queue_entry.each do |i|
-    #   @queue << i
-    # end
-    # return @queue
   end
 end
