@@ -31,7 +31,7 @@ class CLI
     @find_command   = ""
     @parameters     = ""
     @queue ||= TheQueue.new
-    @event_reporter = nil
+    @event_reporter ||= EventReporter.new(@queue)
   end
 
   def self.run
@@ -58,7 +58,11 @@ class CLI
   def assign_instructions(parts)
     @command = parts[0]
     if parts[0] == 'load'
-      @parameters = parts[1]
+      if parts[1]
+        @parameters = parts[1]
+      else
+        @parameters = './data/event_attendees.csv'
+      end
     elsif parts[0] == 'find'
       @find_command = parts[1]
       @parameters = parts[2]
@@ -100,7 +104,7 @@ class CLI
     end
   end
 
-  def assign_queue_command(parts, n)
+  def assign_queue_command(parts, n) # n is number of params to be added
     if n == 1
       @queue_command = parts[1]
     elsif n == 2
@@ -156,13 +160,10 @@ class CLI
     when 'queue'
       execute_queue_command
     when 'load'
-      repository = AttendeeRepository.load(parameters='./data/event_attendees.csv', Attendee)
+      repository = AttendeeRepository.load(parameters, Attendee)
       @event_reporter = EventReporter.new(repository, @queue)
-      loaded 'file'
     when 'find'
-      if event_reporter
       event_reporter.find(find_command, parameters)
-      end
     when 'help'
       if @parameters == ''
         puts Help.general
@@ -173,19 +174,17 @@ class CLI
   end
 
   def execute_queue_command
-    if event_reporter
-      case queue_command
-      when 'count'
-        puts event_reporter.count_data
-      when 'save to'
-        event_reporter.save_to(@parameters)
-      when 'print by'
-        puts event_reporter.print_by
-      when 'print'
-        puts event_reporter.print_data_table
-      when 'clear'
-        event_reporter.clear
-      end
+    case queue_command
+    when 'count'
+      puts event_reporter.count_data
+    when 'save to'
+      event_reporter.save_to(@parameters)
+    when 'print by'
+      puts event_reporter.print_by
+    when 'print'
+      puts event_reporter.print_data_table
+    when 'clear'
+      event_reporter.clear
     end
   end
 

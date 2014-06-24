@@ -34,7 +34,7 @@ class TheQueue
 
     CSV.open(file_name, 'wb') do |csv|
       csv << ["id", "RegDate", "last_name", "first_name", "email", "zipode", "city", "state", "address", "phone_number"]
-      @current.each{|attendee| csv << attendee}
+      # @current.each{|attendee| csv << attendee}
     end
     return "Your file has been saved to #{file_name}"
   end
