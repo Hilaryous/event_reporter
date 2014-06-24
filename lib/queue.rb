@@ -9,7 +9,8 @@ class TheQueue
   end
 
   def count_data
-    @current.count
+    puts "made it to TheQueue#count_data"
+    return @current.count
   end
 
   def clear_data

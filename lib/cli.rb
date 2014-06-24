@@ -13,6 +13,19 @@ class CLI
               :find_command,
               :event_reporter
 
+  def start
+    puts "Entry Reporter"
+    command = '> '
+
+    while command != 'q'
+      puts "load a file:"
+      puts "> "
+      parts = process_input(gets.chomp)
+      assign_instructions(parts)
+      execute_instructions
+    end
+  end
+
   def initialize
     @command        = ""
     @queue_command  = ""
@@ -175,19 +188,6 @@ class CLI
       Help.find
     when 'load'
       Help.load_file
-    end
-  end
-
-  def start
-    puts "Entry Reporter"
-    command = '> '
-
-    while command != 'q'
-      puts "load a file:"
-      puts "> "
-      parts = process_input(gets.chomp)
-      assign_instructions(parts)
-      execute_instructions
     end
   end
 end

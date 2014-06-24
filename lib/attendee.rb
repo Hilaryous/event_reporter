@@ -19,8 +19,8 @@ class Attendee
     @last_name = clean_last_name(data[:last_name])
     @email_address = data[:email_address]
     @homephone = clean_homephone(data[:homephone])
-    @street = data[:street]
-    @city = data[:city]
+    @street = clean_street(data[:street]) #clean_street(data[:street])
+    @city = clean_city(data[:city])
     @state = clean_state(data[:state])
     @zipcode = clean_zipcode(data[:zipcode])
   end
@@ -52,17 +52,23 @@ class Attendee
   end
 
   def clean_street(street)
-    parts = street.to_s.split(' ')
+    unless street.nil?
+      parts = street.to_s.split(' ')
 
-    parts[1..-1].each{ |part| part.capitalize}
-    parts[0..-1].join(' ')
+      parts[1..-1].each{ |part| part.capitalize}
+      parts[0..-1].join(' ')
+    end
   end
 
   def clean_city(city)
-    city.capitalize
+    unless city.nil?
+      city.capitalize
+    end
   end
 
   def clean_state(state)
-    state.upcase
+    unless city.nil?
+      state.upcase
+    end
   end
 end

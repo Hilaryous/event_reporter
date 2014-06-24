@@ -98,8 +98,8 @@ class CLITest < Minitest::Test
   end
 
   def test_it_execute_the_save_to_command
-    input = 'load ./test/fixtures/event_attendees.csv'
-    result = process_and_execute(input)
+    # input = 'load ./test/fixtures/event_attendees.csv'
+    # result = process_and_execute('')
 
     input = 'queue save to empty'
     result = process_and_execute(input)
