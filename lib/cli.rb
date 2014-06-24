@@ -195,11 +195,19 @@ class CLI
       puts Help.count
     when 'queue clear'
       puts Help.clear
+<<<<<<< HEAD
     when 'queue print'
       puts Help.printer
     when 'queue save to'
       puts Help.save_to
     when 'queue print by'
+=======
+    when 'queue puts'
+      puts Help.printer
+    when 'queue save to'
+      puts Help.save_to
+    when 'queue puts by'
+>>>>>>> master
       puts Help.print_by
     when 'find'
       puts Help.find
