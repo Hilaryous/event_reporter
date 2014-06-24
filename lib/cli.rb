@@ -162,7 +162,7 @@ class CLI
       event_reporter.find(find_command, parameters)
     when 'help'
       if @parameters == ''
-        print Help.general
+        puts Help.general
       else
         execute_help_command
       end
@@ -187,19 +187,19 @@ class CLI
   def execute_help_command
     case parameters
     when 'queue count'
-      print Help.count
+      puts Help.count
     when 'queue clear'
-      print Help.clear
-    when 'queue print'
-      print Help.printer
+      puts Help.clear
+    when 'queue puts'
+      puts Help.printer
     when 'queue save to'
-      print Help.save_to
-    when 'queue print by'
-      print Help.print_by
+      puts Help.save_to
+    when 'queue puts by'
+      puts Help.print_by
     when 'find'
-      print Help.find
+      puts Help.find
     when 'load'
-      print Help.load_file
+      puts Help.load_file
     end
   end
 end
