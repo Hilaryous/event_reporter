@@ -1,3 +1,5 @@
+require 'csv'
+
 class TheQueue
   attr_reader :current
   def initialize
@@ -25,11 +27,15 @@ class TheQueue
     "Hello"
   end
 
-  def save_to(filename,text="Hi")
+  def save_to(filename)
     Dir.mkdir("output") unless Dir.exists?("output")
 
-    filename = "output/#{filename}.csv"
+    file_name = "output/#{filename}.csv"
 
-    File.open(filename, 'w'){|f| f.write(text)}
+    CSV.open(file_name, 'wb') do |csv|
+      csv << ["id", "RegDate", "last_name", "first_name", "email", "zipode", "city", "state", "address", "phone_number"]
+      csv << @current.each {|attendee| attendee}
+    end
+    puts "Your file has been saved to #{file_name}"
   end
 end
