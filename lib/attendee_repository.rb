@@ -14,13 +14,6 @@ class AttendeeRepository
     @attendee_collection = attendee_collection
   end
 
-  # what should this return
-  # creates a new array with attendee objects that match criteria
-  # create a new queue object if one doesn't exists
-  # add each attendee object to TheQueue.current (array)
-  # we want EventReporter to have access to an instance of
-  # TheQueue that has the proper entries loaded.
-
   def find(attribute, value)
     attendee_collection.select { |object| object.send(attribute) == value }
     # @queue ||= TheQueue.new

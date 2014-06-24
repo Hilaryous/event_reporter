@@ -19,7 +19,6 @@ class CLI
     @find_command   = ""
     @parameters     = ""
     @queue ||= TheQueue.new
-    # @event_reporter = []
     @event_reporter ||= EventReporter.new(@queue)
   end
 
@@ -179,8 +178,6 @@ class CLI
     end
   end
 
-
-  # just load a file once
   def start
     puts "Entry Reporter"
     command = '> '

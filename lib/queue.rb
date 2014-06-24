@@ -1,6 +1,6 @@
 class TheQueue
   attr_reader :current
-  def initialize#(find_results)
+  def initialize
     @current = []
   end
 
