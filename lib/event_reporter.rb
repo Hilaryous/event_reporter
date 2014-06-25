@@ -7,6 +7,7 @@ class EventReporter
 
   def find(attribute, value)
     if @repository
+      @queue = TheQueue.new
       results = @repository.find(attribute, value)
       results.each { |i| @queue.current << i }
     else
