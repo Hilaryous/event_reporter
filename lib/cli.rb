@@ -21,7 +21,7 @@ class CLI
 
   def start
     puts "Welcome to Entry Reporter"
-    while command != 'q'
+    while command != 'quit'
       puts "Enter your command:"
       parts = process_input(gets.chomp)
       assign_instructions(parts)
