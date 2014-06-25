@@ -8,7 +8,8 @@ class Attendee
               :street,
               :city,
               :state,
-              :zipcode
+              :zipcode,
+              :data
 
   def initialize(data)
     @id = data[:id]
@@ -21,6 +22,7 @@ class Attendee
     @city = clean_city(data[:city])
     @state = clean_state(data[:state])
     @zipcode = clean_zipcode(data[:zipcode])
+    @data = ''
   end
 
   def clean_first_name(first_name)
@@ -60,6 +62,8 @@ class Attendee
 
   def clean_city(city)
     unless city.nil?
+      parts = city.to_s.split(' ')
+      parts.map{|part| part.capitalize}.join(' ')
       city.capitalize
     end
   end
@@ -68,5 +72,9 @@ class Attendee
     unless city.nil?
       state.upcase
     end
+  end
+
+  def data
+    @data = "#{id} #{regdate} #{last_name} #{first_name} #{email_address} #{homephone} #{street} #{city} #{state} #{zipcode}"
   end
 end

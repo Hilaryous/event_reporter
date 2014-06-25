@@ -33,8 +33,10 @@ class TheQueue
     file_name = "output/#{filename}.csv"
 
     CSV.open(file_name, 'wb') do |csv|
-      csv << ["id", "RegDate", "last_name", "first_name", "email", "zipode", "city", "state", "address", "phone_number"]
-      # @current.each{|attendee| csv << attendee}
+      csv << ["id", "RegDate", "last_name", "first_name", "email", "phone_number", "address", "city", "state", "zipode", ]
+      @current[1..-1].each do |attendee|
+        csv << attendee.data.split
+      end
     end
     return "Your file has been saved to #{file_name}"
   end
