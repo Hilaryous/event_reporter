@@ -52,7 +52,7 @@ class CLI
     @command = parts[0]
     if parts[0] == 'load'
       if parts[1]
-        @parameters = Dir["./**/#{parts[1]}"].join('')
+        @parameters = Dir["./*/#{parts[1]}"].join('')
       else
         @parameters = './data/event_attendees.csv'
       end
