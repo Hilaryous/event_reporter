@@ -23,7 +23,7 @@ class AttendeeTest < Minitest::Test
     assert_equal 'Snow', attendee.last_name
     assert_equal 'hello@hello.com', attendee.email_address
     assert_equal '1123456789', attendee.homephone
-    assert_equal '109 street', attendee.street
+    assert_equal '109 Street', attendee.street
     assert_equal 'Atlanta', attendee.city
     assert_equal 'GA', attendee.state
     assert_equal '12345', attendee.zipcode
