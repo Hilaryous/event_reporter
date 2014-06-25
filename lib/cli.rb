@@ -59,7 +59,7 @@ class CLI
     @command = parts[0]
     if parts[0] == 'load'
       if parts[1]
-        @parameters = parts[1]
+        @parameters = "./data/#{parts[1]}"
       else
         @parameters = './data/event_attendees.csv'
       end
