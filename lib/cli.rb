@@ -105,45 +105,32 @@ class CLI
   end
 
   def assign_queue_command(parts, n) # n is number of params to be added
-    if n == 1
-      @queue_command = parts[1]
-    elsif n == 2
-      @queue_command = parts[1..2].join(" ")
-    end
+    @queue_command = parts[1] if n == 1
+    @queue_command = parts[1..2].join(" ") if n == 2
   end
 
   def assign_queue_parameters(parts, n)
-    if n == 1
-      @parameters = parts[2..-1].join(" ")
-    elsif n == 2
-      @parameters = parts[3..-1].join(" ")
-    end
+    @parameters = parts[2..-1].join(" ") if n == 1
+    @parameters = parts[3..-1].join(" ") if n == 2
   end
 
   def assign_help_instructions(parts)
     case parts[1]
-    when 'find'
-      assign_help_parameter(parts, 1)
-    when 'load'
-      assign_help_parameter(parts, 1)
+    when 'find' then assign_help_parameter(parts, 1)
+    when 'load' then assign_help_parameter(parts, 1)
     end
   end
 
   def assign_queue_help_instructions(parts)
     case parts[1..2].join(" ")
-    when 'queue count'
-      assign_help_parameter(parts, 2)
-    when 'queue clear'
-      assign_help_parameter(parts, 2)
-    when 'queue print'
-      assign_help_parameter(parts, 2)
+    when 'queue count' then assign_help_parameter(parts, 2)
+    when 'queue clear' then assign_help_parameter(parts, 2)
+    when 'queue print' then assign_help_parameter(parts, 2)
     end
 
     case parts[1..3].join(" ")
-    when 'queue print by'
-      assign_help_parameter(parts, 3)
-    when 'queue save to'
-      assign_help_parameter(parts, 3)
+    when 'queue print by' then assign_help_parameter(parts, 3)
+    when 'queue save to'  then assign_help_parameter(parts, 3)
     end
   end
 
@@ -175,35 +162,23 @@ class CLI
 
   def execute_queue_command
     case queue_command
-    when 'count'
-      puts event_reporter.count_data
-    when 'save to'
-      event_reporter.save_to(@parameters)
-    when 'print by'
-      puts event_reporter.print_by
-    when 'print'
-      puts event_reporter.print_data_table
-    when 'clear'
-      event_reporter.clear
+    when 'count'    then puts event_reporter.count_data
+    when 'save to'  then event_reporter.save_to(@parameters)
+    when 'print by' then event_reporter.print_by(@parameters)
+    when 'print'    then event_reporter.print_data_table
+    when 'clear'    then event_reporter.clear
     end
   end
 
   def execute_help_command
     case parameters
-    when 'queue count'
-      puts Help.count
-    when 'queue clear'
-      puts Help.clear
-    when 'queue print'
-      puts Help.printer
-    when 'queue save to'
-      puts Help.save_to
-    when 'queue print by'
-      puts Help.print_by
-    when 'find'
-      puts Help.find
-    when 'load'
-      puts Help.load_file
+    when 'queue count'    then puts Help.count
+    when 'queue clear'    then puts Help.clear
+    when 'queue print'    then puts Help.printer
+    when 'queue save to'  then puts Help.save_to
+    when 'queue print by' then puts Help.print_by
+    when 'find'           then puts Help.find
+    when 'load'           then puts Help.load_file
     end
   end
 end
