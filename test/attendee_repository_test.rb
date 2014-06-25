@@ -1,8 +1,4 @@
-gem 'minitest', '~> 5.2'
-require 'minitest/autorun'
-require 'minitest/pride'
-
-require './lib/attendee_repository'
+require './test/test_helper'
 
 class AttendeeRepositoryTest < Minitest::Test
   attr_reader :attendee_repo, :filename

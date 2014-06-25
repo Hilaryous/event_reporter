@@ -1,11 +1,4 @@
-gem 'minitest', '~> 5.2'
-require 'minitest/autorun'
-require 'minitest/pride'
-
-require './lib/queue'
-require './lib/attendee_repository'
-require './lib/event_reporter'
-
+require './test/test_helper'
 class TheQueueTest < Minitest::Test
   attr_reader :find_results, :queue, :repo
   def setup
