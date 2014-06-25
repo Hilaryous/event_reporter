@@ -51,8 +51,7 @@ class Attendee
     unless street.nil?
       parts = street.to_s.split(' ')
 
-      parts[1..-1].each{ |part| part.capitalize}
-      parts[0..-1].join(' ')
+      parts.map{ |part| part.capitalize}.join(' ')
     end
   end
 

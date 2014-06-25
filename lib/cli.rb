@@ -1,3 +1,4 @@
+require 'pry'
 class CLI
   attr_reader :command,
               :parameters,
@@ -5,17 +6,8 @@ class CLI
               :find_command,
               :event_reporter
 
-  def start
-    puts "Entry Reporter"
-    command = '> '
-
-    while command != 'q'
-      puts "load a file:"
-      puts "> "
-      parts = process_input(gets.chomp)
-      assign_instructions(parts)
-      execute_instructions
-    end
+  def self.run
+    CLI.new.start
   end
 
   def initialize
@@ -27,14 +19,10 @@ class CLI
     @event_reporter ||= EventReporter.new(@queue)
   end
 
-  def self.run
-    CLI.new.start
-  end
-
   def start
-    puts "Entry Reporter"
+    puts "Welcome to Entry Reporter"
     while command != 'q'
-      puts "enter input:"
+      puts "Enter your command:"
       parts = process_input(gets.chomp)
       assign_instructions(parts)
       execute_instructions
@@ -48,6 +36,14 @@ class CLI
     input.split
   end
 
+  def process_find_input(input)
+    unless input.nil?
+      parts = input.to_s.split(' ')
+
+      parts.map{|part| part.capitalize}.join(' ')
+    end
+  end
+
   def assign_instructions(parts)
     @command = parts[0]
     if parts[0] == 'load'
@@ -58,7 +54,7 @@ class CLI
       end
     elsif parts[0] == 'find'
       @find_command = parts[1]
-      @parameters = parts[2]
+      @parameters = process_find_input(parts[2])
     elsif parts[0] == 'queue'
       assign_queue_instructions(parts)
     elsif parts[0] == 'help'
