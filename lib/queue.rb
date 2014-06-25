@@ -50,12 +50,14 @@ class TheQueue
   def save_to(filename)
     Dir.mkdir("output") unless Dir.exists?("output")
 
-    file_name = "output/#{filename}.csv"
+    file_name = "output/#{filename}"
 
     CSV.open(file_name, 'wb') do |csv|
       csv << ["id", "RegDate", "last_name", "first_name", "email", "phone_number", "address", "city", "state", "zipode", ]
-      @current[1..-1].each do |attendee|
-        csv << attendee.data.split
+      if @current
+        @current.each do |attendee|
+          csv << attendee.data
+        end
       end
     end
     return "Your file has been saved to #{file_name}"

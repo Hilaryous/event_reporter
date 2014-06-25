@@ -26,11 +26,15 @@ class Attendee
   end
 
   def clean_first_name(first_name)
-    first_name.capitalize
+    unless first_name.nil?
+      first_name.capitalize
+    end
   end
 
   def clean_last_name(last_name)
-    last_name.capitalize
+    unless last_name.nil?
+      last_name.capitalize
+    end
   end
 
   def clean_zipcode(zipcode)
@@ -38,7 +42,9 @@ class Attendee
   end
 
   def clean_homephone(phone_number)
-    phone_number.delete("-(). ")
+    unless phone_number.nil?
+      phone_number.delete("-(). ")
+    end
   end
 
   def clean_street(street)
@@ -64,6 +70,6 @@ class Attendee
   end
 
   def data
-    @data = "#{id} #{regdate} #{last_name} #{first_name} #{email_address} #{homephone} #{street} #{city} #{state} #{zipcode}"
+    @data = ["#{id}","#{regdate}","#{last_name}","#{first_name}","#{email_address}","#{homephone}","#{street}","#{city}","#{state}","#{zipcode}"]
   end
 end
