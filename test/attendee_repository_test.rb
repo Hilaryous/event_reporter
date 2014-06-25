@@ -15,4 +15,9 @@ class AttendeeRepositoryTest < Minitest::Test
     assert_equal 1, attendee_repo.attendee_collection[0].id.to_i
     assert_equal "Allison", attendee_repo.attendee_collection[0].first_name
   end
+
+  def test_it_finds_data
+    results = attendee_repo.find(:last_name, 'Hankins')
+    assert_match /Hankins/, results[0].last_name
+  end
 end
