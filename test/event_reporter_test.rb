@@ -1,11 +1,4 @@
-gem 'minitest', '~> 5.2'
-require 'minitest/autorun'
-require 'minitest/pride'
-
-require './lib/event_reporter'
-require './lib/queue'
-require 'pry'
-
+require './test/test_helper'
 class EventReporterTest < Minitest::Test
   attr_reader :repo, :event_reporter, :queue
   def setup

@@ -1,8 +1,4 @@
-gem 'minitest', '~> 5.2'
-require 'minitest/autorun'
-require 'minitest/pride'
-require_relative '../lib/cli'
-
+require './test/test_helper'
 class CLITest < Minitest::Test
 
   attr_reader :cli

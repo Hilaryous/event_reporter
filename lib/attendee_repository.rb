@@ -1,6 +1,3 @@
-require 'csv'
-require './lib/attendee'
-
 class AttendeeRepository
   def self.load(filename='./data/event_attendees.csv', klass)
     rows = CSV.open(filename, headers: true, header_converters: :symbol)

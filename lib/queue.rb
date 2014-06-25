@@ -1,6 +1,3 @@
-require 'csv'
-require 'pry'
-
 class TheQueue
   attr_reader :current
   def initialize

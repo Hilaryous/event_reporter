@@ -1,10 +1,3 @@
-require './lib/event_reporter'
-require './lib/attendee_repository'
-require './lib/attendee'
-require './lib/help'
-require './lib/queue'
-require 'csv'
-
 class CLI
   attr_reader :command,
               :parameters,

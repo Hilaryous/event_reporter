@@ -1,9 +1,4 @@
-gem 'minitest', '~> 5.2'
-require 'minitest/autorun'
-require 'minitest/pride'
-
-require_relative '../lib/help'
-
+require './test/test_helper'
 class HelpTest < Minitest::Test
 
   def test_prints_general_help_statement

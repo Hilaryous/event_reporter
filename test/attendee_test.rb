@@ -1,11 +1,4 @@
-gem 'minitest', '~> 5.2'
-require 'minitest/autorun'
-require 'minitest/pride'
-
-require './lib/attendee'
-
-require 'pry'
-
+require './test/test_helper'
 class AttendeeTest < Minitest::Test
   def entry
       {

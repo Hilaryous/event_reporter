@@ -1,5 +1,3 @@
-require './lib/attendee_repository'
-
 class EventReporter
   attr_reader :queue
   def initialize(repository=nil, queue)
