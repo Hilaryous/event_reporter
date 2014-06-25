@@ -38,9 +38,11 @@ class CLI
 
   def process_find_input(input)
     unless input.nil?
-      parts = input.to_s.split(' ')
-
-      parts.map{|part| part.capitalize}.join(' ')
+      if @find_command == 'state'
+        input[0].upcase
+      else
+        input.map{|part| part.capitalize}.join
+      end
     end
   end
 
@@ -54,7 +56,7 @@ class CLI
       end
     elsif parts[0] == 'find'
       @find_command = parts[1]
-      @parameters = process_find_input(parts[2])
+      @parameters = process_find_input(parts[2..-1])
     elsif parts[0] == 'queue'
       assign_queue_instructions(parts)
     elsif parts[0] == 'help'
@@ -155,7 +157,7 @@ class CLI
     when 'save to'  then event_reporter.save_to(@parameters)
     when 'print by' then event_reporter.print_by(@parameters)
     when 'print'    then event_reporter.print_data_table
-    when 'clear'    then event_reporter.clear
+    when 'clear'    then event_reporter.clear_data
     end
   end
 
