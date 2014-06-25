@@ -19,7 +19,7 @@ class EventReporter
     @queue.count_data
   end
 
-  def clear
+  def clear_data
     @queue.clear_data
   end
 

@@ -1,11 +1,28 @@
 require './test/test_helper'
 class TheQueueTest < Minitest::Test
-  attr_reader :find_results, :queue, :repo
+  # repository = AttendeeReposito
+  # attendee = Attendee.new(entry)#'./test/fixtures/event_attendees.csv')
+
+  def entry
+      {
+        id: 1,
+        regdate:       'July 1, 2013',
+        first_name:    'JOn',
+        last_name:     'SnoW',
+        email_address: 'hello@hello.com',
+        homephone:     "1123456789",
+        street:        '109 street',
+        city:          'atlanta',
+        state:         'ga',
+        zipcode:       '12345'
+      }
+  end
+
+  attr_reader :queue
   def setup
-    @repo = AttendeeRepository.load('./test/fixtures/event_attendees.csv', Attendee)
-    @event_reporter = EventReporter.new(repo, TheQueue.new)
-    @queue = @event_reporter.queue
-    @event_reporter.find(:first_name, 'Sarah')
+    attendee = Attendee.new(entry)
+    @queue = TheQueue.new
+    @queue << attendee
   end
 
   def test_it_exists
@@ -13,7 +30,7 @@ class TheQueueTest < Minitest::Test
   end
 
   def test_it_counts_the_queue
-    assert_equal 2, queue.count_data
+    assert_equal 1, queue.count_data
   end
 
   def test_it_clears_the_queue
@@ -22,15 +39,11 @@ class TheQueueTest < Minitest::Test
   end
 
   def test_it_executes_print
-    skip
-    # fix with implementation of print methods
-    assert_equal "Hi", queue.print_data_table
+    assert queue.print_data_table
   end
 
   def test_it_executes_print_by
-    skip
-    # fix like above
-    assert_equal "Hello", queue.print_by
+    assert queue.print_by(:first_name)
   end
 
   def test_it_save_to
