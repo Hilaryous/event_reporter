@@ -48,6 +48,6 @@ class TheQueueTest < Minitest::Test
 
   def test_it_save_to
     filename = 'empty'
-    assert_match /file/, queue.save_to(filename)
+    assert_match /empty/, queue.save_to(filename)
   end
 end

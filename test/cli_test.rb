@@ -1,20 +1,19 @@
 require './test/test_helper'
 class CLITest < Minitest::Test
 
-  attr_reader :cli
+  attr_reader :cli, :parser
   def setup
     @cli ||= CLI.new
   end
 
-  def process_and_execute(input)
-    parts = cli.send(:process_input, input)
-    cli.send(:assign_instructions, parts)
+  def execute_instructions
     cli.send(:execute_instructions)
   end
 
-  def process_and_assign(input)
-    parts = cli.send(:process_input, input)
-    cli.send(:assign_instructions, parts)
+  def assign(input)
+    parts = cli.parser.process_input(input)
+    cli.parser.assign_instructions(parts)
+    cli.send(:assign_commands_and_params)
   end
 
   def test_it_exist
@@ -27,91 +26,59 @@ class CLITest < Minitest::Test
     assert cli.send(:parameters)
   end
 
-  def test_it_processes_input
-    input  = 'find zipcode 80203'
-    result = cli.send(:process_input, input)
-
-    assert_equal ['find', 'zipcode', '80203'], result
-  end
-
-  def test_it_assigns_instructions
-    input  = 'load fixtures/event_attendees.csv'
-    result = process_and_assign(input)
-
-    assert_equal 'load', cli.send(:command)
-    assert_equal './test/fixtures/event_attendees.csv', cli.send(:parameters)
-  end
-
-  def test_it_assigns_queue_instructions
-    input  = 'queue count'
-    result = process_and_assign(input)
-
-    assert_equal 'count', cli.send(:queue_command)
-  end
-
-  def test_it_assigns_help_instructions
-    input  = 'help queue count'
-    result = process_and_assign(input)
-
-    assert_equal 'queue count', cli.send(:parameters)
-  end
 
   def test_it_exectues_instructions
-    input  = 'help'
-    result = process_and_execute(input)
+    input  = 'load'
+    assign(input)
+    result = execute_instructions
 
-    assert_equal nil, result
+    assert cli.event_reporter.queue
   end
 
   def test_it_executes_queue_commands
     input  = 'queue count'
-    result = process_and_execute(input)
+    result = execute_instructions
 
     assert_equal nil, result
   end
 
   def test_it_executes_help_commands
     input  = 'help queue count'
-    result = process_and_execute(input)
+    result = execute_instructions
 
     assert_equal nil, result
   end
 
-  def test_assign_queue_command_assigns_parameters
-    input = 'queue print by parameters'
-    result = process_and_assign(input)
-
-    assert_equal 'queue', cli.send(:command)
-    assert_equal 'print by', cli.send(:queue_command)
-    assert_equal 'parameters', cli.send(:parameters)
-  end
 
   def test_it_loads_data
     input = 'load fixtures/event_attendees.csv'
-    result = process_and_execute(input)
+    assign(input)
+    execute_instructions
 
-    assert cli.send(:event_reporter)
+    assert cli.event_reporter.queue
   end
 
   def test_it_execute_the_save_to_command
     input = 'load fixtures/event_attendees.csv'
-    result = process_and_execute(input)
+    assign(input)
+    execute_instructions
 
     input = 'queue save to empty'
-    result = process_and_execute(input)
+    assign(input)
+    execute_instructions
 
-    assert_match /save/, result
-
+    assert_match /empty/, cli.event_reporter.save_to("empty")
   end
 
   def test_it_executes_the_find_command
     input = 'load fixtures/event_attendees.csv'
-    result = process_and_execute(input)
+    assign(input)
+    execute_instructions
 
-    input = 'find last_name smith'
-    result = process_and_execute(input)
-
-    assert result
+    input = 'find last_name nguyen'
+    assign(input)
+    execute_instructions
+    assert_equal 1, cli.event_reporter.count_data
   end
 
 end
