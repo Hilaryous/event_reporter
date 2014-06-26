@@ -1,6 +1,6 @@
 module Help
   def self.general
-    "The available commands are: [load <filename>] [queue count] [queue clear] [queue print] [queue print by <attribute>] [queue save to <filename.csv>] [find <attribute> <criteria>]\nType help followed by the command name to learn more about each command"
+    "The available commands are:\n [load <filename>]\n [queue count]\n [queue clear]\n [queue print]\n [queue print by <attribute>]\n [queue save to <filename.csv>]\n [find <attribute> <criteria>]\nType help followed by the command name to learn more about each command"
   end
 
   def self.find

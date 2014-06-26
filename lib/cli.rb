@@ -59,6 +59,7 @@ class CLI
       else
         execute_help_command
       end
+    else puts "#{input} is not an event reporter command. See 'help' for the available commands."
     end
   end
 
