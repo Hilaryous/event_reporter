@@ -8,7 +8,7 @@ class ParserTest < Minitest::Test
 
   def process_and_assign(input)
     parts = parser.process_input(input)
-    parser.assign_instructions(parts)
+    parser.assign_commands(parts)
   end
 
   def test_it_processes_input
@@ -18,7 +18,7 @@ class ParserTest < Minitest::Test
     assert_equal ['find', 'zipcode', '80203'], result
   end
 
-  def test_it_assigns_instructions
+  def test_it_assigns_commands
     input  = 'load fixtures/event_attendees.csv'
     result = process_and_assign(input)
 
@@ -26,14 +26,14 @@ class ParserTest < Minitest::Test
     assert_equal './test/fixtures/event_attendees.csv', parser.parameters
   end
 
-  def test_it_assigns_queue_instructions
+  def test_it_assigns_queue_commands
     input  = 'queue count'
     result = process_and_assign(input)
 
     assert_equal 'count', parser.queue_command
   end
 
-  def test_it_assigns_help_instructions
+  def test_it_assigns_help_commands
     input  = 'help queue count'
     result = process_and_assign(input)
 

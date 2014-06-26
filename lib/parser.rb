@@ -26,7 +26,7 @@ class Parser
     end
   end
 
-  def assign_instructions(parts)
+  def assign_commands(parts)
     @command = parts[0]
     if parts[0] == 'load'
       if parts[1]
@@ -50,7 +50,7 @@ class Parser
     end
   end
 
-  def assign_queue_instructions(parts)
+  def assign_queue_commands(parts)
     case parts[1]
     when 'count'
       assign_queue_command(parts, 1)
@@ -85,14 +85,14 @@ class Parser
     @parameters = parts[3..-1].join(" ") if n == 2
   end
 
-  def assign_help_instructions(parts)
+  def assign_help_commands(parts)
     case parts[1]
     when 'find' then assign_help_parameter(parts, 1)
     when 'load' then assign_help_parameter(parts, 1)
     end
   end
 
-  def assign_queue_help_instructions(parts)
+  def assign_queue_help_commands(parts)
     case parts[1..2].join(" ")
     when 'queue count' then assign_help_parameter(parts, 2)
     when 'queue clear' then assign_help_parameter(parts, 2)
