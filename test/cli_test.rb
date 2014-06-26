@@ -1,4 +1,3 @@
-require 'pry'
 require './test/test_helper'
 class CLITest < Minitest::Test
 
