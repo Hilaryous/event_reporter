@@ -1,4 +1,3 @@
-require 'pry'
 class CLI
   attr_reader   :command,
                 :parameters,
@@ -29,9 +28,9 @@ class CLI
       puts "Enter your command:"
       @input = gets.chomp
       parts = @parser.process_input(input)
-      @parser.assign_instructions(parts)
+      @parser.assign_commands(parts)
       assign_commands_and_params
-      execute_instructions
+      execute_commands
     end
     puts "Quitting Event Reporter"
   end

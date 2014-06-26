@@ -1,3 +1,4 @@
+require 'pry'
 require './test/test_helper'
 class CLITest < Minitest::Test
 
@@ -12,7 +13,7 @@ class CLITest < Minitest::Test
 
   def assign(input)
     parts = cli.parser.process_input(input)
-    cli.parser.assign_instructions(parts)
+    cli.parser.assign_commands(parts)
     cli.send(:assign_commands_and_params)
   end
 
@@ -26,7 +27,6 @@ class CLITest < Minitest::Test
     assert cli.send(:parameters)
   end
 
-
   def test_it_exectues_commands
     input  = 'load'
     assign(input)
@@ -35,31 +35,25 @@ class CLITest < Minitest::Test
     assert cli.event_reporter.queue
   end
 
-  def assert_output stdout = "0", stderr = "queue count"
-    out, err = capture_io do
-      yield
-    end
 
-    x = assert_equal stdout, out, "0" if stdout
+  # def assert_output stdout = nil, stderr = nil
+  #   out, err = capture_io do
+  #     yield
+  #   end
+  #
+  #   x = assert_equal stdout, out, "1" if stdout
+  #   y = assert_equal stderr, err, "queue count" if stderr
+  #
+  #   (!stdout || x) && (!stderr || y)
+  # end
 
-    (!stdout || x)
+  def test_it_executes_commands
+    assert_output ("0\n") {puts cli.event_reporter.count_data}
   end
-
-  def test_it_executes_queue_commands
-    input  = 'queue count'
-    result = execute_commands
-
-    assert_equal nil, result
-  end
-
 
   def test_it_executes_help_commands
-    input  = 'help queue count'
-    result = execute_commands
-
-    assert_equal nil, result
+    assert_output (/Output/) {puts Help.count}
   end
-
 
   def test_it_loads_data
     input = 'load fixtures/event_attendees.csv'
@@ -70,15 +64,7 @@ class CLITest < Minitest::Test
   end
 
   def test_it_execute_the_save_to_command
-    input = 'load fixtures/event_attendees.csv'
-    assign(input)
-    execute_commands
-
-    input = 'queue save to empty'
-    assign(input)
-    execute_commands
-
-    assert_match /empty/, cli.event_reporter.save_to("empty")
+    assert_output (/empty/) {cli.event_reporter.save_to('empty')}
   end
 
   def test_it_executes_the_find_command

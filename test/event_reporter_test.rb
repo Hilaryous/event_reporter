@@ -22,15 +22,14 @@ class EventReporterTest < Minitest::Test
   end
 
   def test_it_executes_print
-    assert event_reporter.print_data_table
+    assert_output (/FIRST NAME/){event_reporter.print_data_table}
   end
 
   def test_it_executes_print_by
-    assert event_reporter.print_by(:first_name)
+    assert_output (/FIRST NAME/){event_reporter.print_by(:first_name)}
   end
 
   def test_it_save_to
-    filename = "empty"
-    assert_match /file/, event_reporter.save_to(filename)
+    assert_output (/file/) {event_reporter.save_to('file')}
   end
 end

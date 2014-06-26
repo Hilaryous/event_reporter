@@ -1,4 +1,3 @@
-require 'pry'
 class Parser
   attr_reader   :command,
                 :parameters,
@@ -38,12 +37,12 @@ class Parser
       @find_command = parts[1]
       @parameters   = process_find_input(parts[2..-1])
     elsif parts[0] == 'queue'
-      assign_queue_instructions(parts)
+      assign_queue_commands(parts)
     elsif parts[0] == 'help'
       if parts[2]
-        assign_queue_help_instructions(parts)
+        assign_queue_help_commands(parts)
       elsif parts[1]
-        assign_help_instructions(parts)
+        assign_help_commands(parts)
       else
         @command = parts[0]
       end
