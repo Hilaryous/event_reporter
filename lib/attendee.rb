@@ -13,16 +13,16 @@ class Attendee
 
   def initialize(data)
     @id = data[:id]
-    @regdate = data[:regdate]
-    @first_name = clean_first_name(data[:first_name])
-    @last_name = clean_last_name(data[:last_name])
+    @regdate       = data[:regdate]
+    @first_name    = clean_first_name(data[:first_name])
+    @last_name     = clean_last_name(data[:last_name])
     @email_address = data[:email_address]
-    @homephone = clean_homephone(data[:homephone])
-    @street = clean_street(data[:street])
-    @city = clean_city(data[:city])
-    @state = clean_state(data[:state])
-    @zipcode = clean_zipcode(data[:zipcode])
-    @data = ''
+    @homephone     = clean_homephone(data[:homephone])
+    @street        = clean_street(data[:street])
+    @city          = clean_city(data[:city])
+    @state         = clean_state(data[:state])
+    @zipcode       = clean_zipcode(data[:zipcode])
+    @data          = ''
   end
 
   def clean_first_name(first_name)

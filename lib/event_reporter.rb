@@ -2,12 +2,12 @@ class EventReporter
   attr_reader :queue
   def initialize(repository=nil, queue)
     @repository = repository
-    @queue = queue
+    @queue      = queue
   end
 
   def find(attribute, value)
     if @repository
-      @queue = TheQueue.new
+      @queue  = TheQueue.new
       results = @repository.find(attribute, value)
       results.each { |i| @queue.current << i }
     else

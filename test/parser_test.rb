@@ -41,7 +41,7 @@ class ParserTest < Minitest::Test
   end
 
   def test_assign_queue_command_assigns_parameters
-    input = 'queue print by parameters'
+    input  = 'queue print by parameters'
     result = process_and_assign(input)
 
     assert_equal 'queue', parser.command

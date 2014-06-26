@@ -14,12 +14,12 @@ class CLI
 
   def initialize
     @parser = Parser.new
-    @command        = ""
-    @queue_command  = ""
-    @find_command   = ""
-    @parameters     = ""
-    @input          = ""
-    @queue ||= TheQueue.new
+    @command          = ""
+    @queue_command    = ""
+    @find_command     = ""
+    @parameters       = ""
+    @input            = ""
+    @queue          ||= TheQueue.new
     @event_reporter ||= EventReporter.new(@queue)
   end
 
@@ -45,12 +45,12 @@ class CLI
     @parameters     = @parser.parameters
   end
 
-  def execute_instructions
+  def execute_commands
     case command
     when 'queue'
       execute_queue_command
     when 'load'
-      repository = AttendeeRepository.load(parameters, Attendee)
+      repository      = AttendeeRepository.load(parameters, Attendee)
       @event_reporter = EventReporter.new(repository, @queue)
     when 'find'
       event_reporter.find(find_command, parameters)
