@@ -31,7 +31,7 @@ class CLI
       parts = @parser.process_input(input)
       @parser.assign_instructions(parts)
       assign_commands_and_params
-      execute_instructions
+      execute_commands
     end
     puts "Quitting Event Reporter"
   end

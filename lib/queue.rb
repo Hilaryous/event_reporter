@@ -21,22 +21,22 @@ class TheQueue
   def print_data_table(data=@current)
     unless @current.empty?
       puts "LAST NAME".ljust(15) +
-      "FIRST NAME".ljust(15) +
-      "EMAIL".ljust(40) +
-      "ZIPCODE".ljust(15) +
+      "FIRST NAME".ljust(10) +
+      "EMAIL".ljust(45) +
+      "ZIPCODE".ljust(10) +
       "CITY".ljust(20) +
       "STATE".ljust(15) +
-      "ADDRESS".ljust(25) +
+      "ADDRESS".ljust(45) +
       "PHONE".ljust(15)
 
       data.each do |attendee|
         puts attendee.last_name.ljust(15) +
-        attendee.first_name.ljust(15) +
-        attendee.email_address.ljust(40) +
-        attendee.zipcode.ljust(15) +
+        attendee.first_name.ljust(10) +
+        attendee.email_address.ljust(45) +
+        attendee.zipcode.ljust(10) +
         attendee.city.ljust(20) +
         attendee.state.ljust(15) +
-        attendee.street.ljust(25) +
+        attendee.street.ljust(45) +
         attendee.homephone.ljust(15)
       end
     end
