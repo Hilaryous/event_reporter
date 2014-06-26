@@ -34,18 +34,6 @@ class CLITest < Minitest::Test
     assert cli.event_reporter.queue
   end
 
-
-  # def assert_output stdout = nil, stderr = nil
-  #   out, err = capture_io do
-  #     yield
-  #   end
-  #
-  #   x = assert_equal stdout, out, "1" if stdout
-  #   y = assert_equal stderr, err, "queue count" if stderr
-  #
-  #   (!stdout || x) && (!stderr || y)
-  # end
-
   def test_it_executes_commands
     assert_output ("0\n") {puts cli.event_reporter.count_data}
   end
@@ -76,5 +64,4 @@ class CLITest < Minitest::Test
     execute_commands
     assert_equal 1, cli.event_reporter.count_data
   end
-
 end

@@ -1,8 +1,5 @@
 require './test/test_helper'
 class TheQueueTest < Minitest::Test
-  # repository = AttendeeReposito
-  # attendee = Attendee.new(entry)#'./test/fixtures/event_attendees.csv')
-
   def entry
       {
         id: 1,
