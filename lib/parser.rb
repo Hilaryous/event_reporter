@@ -36,7 +36,7 @@ class Parser
       end
     elsif parts[0] == 'find'
       @find_command = parts[1]
-      @parameters = process_find_input(parts[2..-1])
+      @parameters   = process_find_input(parts[2..-1])
     elsif parts[0] == 'queue'
       assign_queue_instructions(parts)
     elsif parts[0] == 'help'

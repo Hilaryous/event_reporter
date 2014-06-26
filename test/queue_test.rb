@@ -21,7 +21,7 @@ class TheQueueTest < Minitest::Test
   attr_reader :queue
   def setup
     attendee = Attendee.new(entry)
-    @queue = TheQueue.new
+    @queue   = TheQueue.new
     @queue << attendee
   end
 
