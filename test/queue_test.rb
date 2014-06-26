@@ -1,8 +1,5 @@
 require './test/test_helper'
 class TheQueueTest < Minitest::Test
-  # repository = AttendeeReposito
-  # attendee = Attendee.new(entry)#'./test/fixtures/event_attendees.csv')
-
   def entry
       {
         id: 1,
@@ -39,15 +36,14 @@ class TheQueueTest < Minitest::Test
   end
 
   def test_it_executes_print
-    assert queue.print_data_table
+    assert_output (/FIRST NAME/) {queue.print_data_table}
   end
 
   def test_it_executes_print_by
-    assert queue.print_by(:first_name)
+    assert_output (/FIRST NAME/) {queue.print_by(:first_name)}
   end
 
   def test_it_save_to
-    filename = 'empty'
-    assert_match /empty/, queue.save_to(filename)
+    assert_output (/empty/) {queue.save_to('empty')}
   end
 end

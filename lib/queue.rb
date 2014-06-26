@@ -57,6 +57,6 @@ class TheQueue
         @current.each {|attendee| csv << attendee.data}
       end
     end
-    return "Your file has been saved to #{file_name}"
+    puts "Your file has been saved to #{file_name}"
   end
 end
